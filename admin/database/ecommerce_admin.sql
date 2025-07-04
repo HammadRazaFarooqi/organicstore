@@ -90,3 +90,6 @@ INSERT INTO settings (setting_key, setting_value) VALUES
 ('site_name', 'E-commerce Admin'),
 ('site_email', 'admin@ecommerce.com'),
 ('timezone', 'UTC');
+
+
+ALTER TABLE products ADD discount_id INT NULL;

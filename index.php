@@ -24,18 +24,23 @@ try {
 }
 
 // Fetch all active products
-try {
-    $prodQuery = "SELECT p.id, p.name, p.description, p.price, p.image, p.status, c.name AS category 
-                  FROM products p 
-                  LEFT JOIN categories c ON p.category_id = c.id
-                  WHERE p.status = 'active'
-                  ORDER BY p.created_at DESC";
-    $prodStmt = $pdo->prepare($prodQuery);
-    $prodStmt->execute();
-    $products = $prodStmt->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    die("Error fetching products: " . $e->getMessage());
-}
+$sql = "SELECT 
+            p.*, 
+            c.name as category, 
+            d.name as discount_name,
+            d.type as discount_type,
+            d.value as discount_value,
+            d.start_date,
+            d.end_date,
+            d.status as discount_status
+        FROM products p
+        LEFT JOIN categories c ON p.category_id = c.id
+        LEFT JOIN discounts d ON p.discount_id = d.id
+        WHERE p.status = 'active'";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 <!DOCTYPE html>
@@ -144,12 +149,12 @@ try {
           <div class="container">
             <div class="row">
               <div class="col-md-4 col-sm-12 col-xs-12">
-                <div class="search-box">
+                <!-- <div class="search-box">
                   <form action="#" class="clearfix">
                     <input type="text" placeholder="Search..." />
                     <button><i class="fa fa-search"></i></button>
                   </form>
-                </div>
+                </div> -->
               </div>
               <div class="col-md-4 col-sm-5 col-xs-6 logo-responsive">
                 <div class="logo-area">
@@ -161,12 +166,11 @@ try {
               <div class="col-md-4 col-sm-7 col-xs-6 pdt-14">
                 <div class="login_option float_left">
                   <div class="login_form">
-                    <div class="user">
+                    <!-- <div class="user">
                       <i class="icon-photo"></i>
-                    </div>
-                    <div class="login-info">
+                    </div> -->
+                    <!-- <div class="login-info">
                       <div class="welcome">Welcome!</div>
-                      <!-- select menu -->
                       <form action="#" class="select-form">
                         <div class="g-input f1 mb-30">
                           <select
@@ -180,7 +184,7 @@ try {
                           </select>
                         </div>
                       </form>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
                 <!-- <div class="cart_option float_left">
@@ -779,8 +783,39 @@ try {
               <span class="fa fa-star"></span>
             </div>
             <div class="price">
-              $<?php echo number_format($product['price'], 2); ?>
-            </div>
+  <?php if (!empty($product['discount_name']) && 
+            $product['discount_status'] == 'active' &&
+            strtotime($product['start_date']) <= time() && 
+            strtotime($product['end_date']) >= time()): ?>
+      
+      <?php
+          $original = (float)$product['price'];
+          $discountAmount = ($product['discount_type'] === 'percentage') 
+              ? $original * ($product['discount_value'] / 100)
+              : $product['discount_value'];
+          $discounted = max(0, $original - $discountAmount);
+      ?>
+      
+      <span style="text-decoration: line-through; color: #999;">
+        $<?php echo number_format($original, 2); ?>
+      </span><br>
+      
+      <span style="color: #e60000; font-weight: bold;">
+        $<?php echo number_format($discounted, 2); ?>
+      </span>
+      
+      <div class="discount-badge" style="color:green; font-size: 12px;">
+          <?php echo ($product['discount_type'] === 'percentage') 
+              ? number_format($product['discount_value']) . '% OFF' 
+              : 'Save $' . number_format($product['discount_value'], 2); ?>
+      </div>
+  
+  <?php else: ?>
+      <span style="font-weight: bold;">$<?php echo number_format($product['price'], 2); ?></span>
+  <?php endif; ?>
+</div>
+
+
           </div>
           <div class="overlay-box">
             <div class="inner">

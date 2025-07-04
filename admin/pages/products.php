@@ -9,6 +9,18 @@ $messageType = '';
 $database = new Database();
 $pdo = $database->getConnection();
 
+// Get discounts for use in product modal
+try {
+    $discounts = $pdo->query("
+        SELECT id, name 
+        FROM discounts 
+        WHERE status = 'active' 
+        ORDER BY name
+    ")->fetchAll(PDO::FETCH_ASSOC);
+} catch (Exception $e) {
+    $discounts = [];
+}
+
 // Handle form database
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['action'])) {
@@ -43,15 +55,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         }
                     }
                     
-                    $stmt = $pdo->prepare("INSERT INTO products (name, description, price, category_id, image, status) VALUES (?, ?, ?, ?, ?, ?)");
+                    $stmt = $pdo->prepare("INSERT INTO products (name, description, price, category_id, image, status, discount_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
                     $stmt->execute([
                         trim($_POST['name']),
                         trim($_POST['description']),
                         $_POST['price'],
                         $_POST['category_id'],
                         $image,
-                        $_POST['status']
+                        $_POST['status'],
+                        !empty($_POST['discount_id']) ? $_POST['discount_id'] : null
                     ]);
+                    
+
                     $message = "Product added successfully!";
                     $messageType = "success";
                     break;
@@ -90,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         }
                     }
                     
-                    $stmt = $pdo->prepare("UPDATE products SET name = ?, description = ?, price = ?, category_id = ?, image = ?, status = ? WHERE id = ?");
+                    $stmt = $pdo->prepare("UPDATE products SET name = ?, description = ?, price = ?, category_id = ?, image = ?, status = ?, discount_id = ? WHERE id = ?");
                     $stmt->execute([
                         trim($_POST['name']),
                         trim($_POST['description']),
@@ -98,8 +113,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $_POST['category_id'],
                         $image,
                         $_POST['status'],
+                        $discount_id,
                         $_POST['id']
                     ]);
+                    
                     $message = "Product updated successfully!";
                     $messageType = "success";
                     break;
@@ -199,6 +216,8 @@ $products = $stmt->fetchAll();
 
 // Get categories for filter and form
 $categories = $pdo->query("SELECT * FROM categories WHERE status = 'active' ORDER BY name")->fetchAll();
+$discounts = $pdo->query("SELECT id, name FROM discounts WHERE status = 'active'")->fetchAll(PDO::FETCH_ASSOC);
+
 
 // Get product for editing
 $editProduct = null;
@@ -207,6 +226,18 @@ if (isset($_GET['edit'])) {
     $stmt->execute([$_GET['edit']]);
     $editProduct = $stmt->fetch();
 }
+
+$discount_id = isset($_POST['discount_id']) && $_POST['discount_id'] != '' ? $_POST['discount_id'] : null;
+
+if (isset($_POST['action'])) {
+    if ($_POST['action'] === 'add') {
+        // your add product logic here
+    } elseif ($_POST['action'] === 'edit') {
+        // your edit product logic here
+    }
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -849,6 +880,28 @@ if (isset($_GET['edit'])) {
                         </select>
                     </div>
                 </div>
+                <div class="form-group">
+    <label for="has_discount">Add Discount?</label>
+    <select id="has_discount" onchange="toggleDiscount(this)">
+        <option value="no" <?php echo (!$editProduct || !$editProduct['discount_id']) ? 'selected' : ''; ?>>No</option>
+        <option value="yes" <?php echo ($editProduct && $editProduct['discount_id']) ? 'selected' : ''; ?>>Yes</option>
+    </select>
+</div>
+
+<div class="form-group" id="discountSelectGroup" style="display: <?php echo ($editProduct && $editProduct['discount_id']) ? 'block' : 'none'; ?>;">
+    <label for="discount_id">Select Discount</label>
+    <select name="discount_id" id="discount_id">
+        <option value="">-- Select Discount --</option>
+        <?php foreach ($discounts as $discount): ?>
+            <option value="<?php echo $discount['id']; ?>"
+                <?php echo ($editProduct && $editProduct['discount_id'] == $discount['id']) ? 'selected' : ''; ?>>
+                <?php echo htmlspecialchars($discount['name']); ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+</div>
+
+
 
                 <div class="form-group full-width">
                     <label for="description">Description</label>
@@ -932,6 +985,13 @@ if (isset($_GET['edit'])) {
       });
     }
   });
+  function toggleDiscount(select) {
+    const group = document.getElementById('discountSelectGroup');
+    group.style.display = (select.value === 'yes') ? 'block' : 'none';
+    if (select.value === 'no') {
+        document.getElementById('discount_id').value = '';
+    }
+}
 </script>
 </body>
 </html>

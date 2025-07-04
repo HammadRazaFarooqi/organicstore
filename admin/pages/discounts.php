@@ -6,120 +6,98 @@ requireLogin();
 $database = new Database();
 $pdo = $database->getConnection();
 
+// Get active products to show in discount modal dropdown
+try {
+    $products = $pdo->query("
+        SELECT id, name 
+        FROM products 
+        WHERE status = 'active' 
+        ORDER BY name
+    ")->fetchAll(PDO::FETCH_ASSOC);
+} catch (Exception $e) {
+    $products = [];
+}
+
 // Handle form submissions
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['action'])) {
         switch ($_POST['action']) {
             case 'add':
-                $stmt = $pdo->prepare("INSERT INTO discounts (name, type, value, product_id, start_date, end_date, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())");
-                $stmt->execute([$_POST['name'], $_POST['type'], $_POST['value'], $_POST['product_id'], $_POST['start_date'], $_POST['end_date'], $_POST['status']]);
+                $stmt = $pdo->prepare("INSERT INTO discounts (name, type, value, start_date, end_date, status, created_at) 
+                                       VALUES (?, ?, ?, ?, ?, ?, NOW())");
+                $stmt->execute([
+                    $_POST['name'],
+                    $_POST['type'],
+                    $_POST['value'],
+                    $_POST['start_date'],
+                    $_POST['end_date'],
+                    $_POST['status']
+                ]);
                 break;
-                
+
             case 'edit':
-                $stmt = $pdo->prepare("UPDATE discounts SET name = ?, type = ?, value = ?, product_id = ?, start_date = ?, end_date = ?, status = ?, updated_at = NOW() WHERE id = ?");
-                $stmt->execute([$_POST['name'], $_POST['type'], $_POST['value'], $_POST['product_id'], $_POST['start_date'], $_POST['end_date'], $_POST['status'], $_POST['id']]);
+                $stmt = $pdo->prepare("UPDATE discounts SET name = ?, type = ?, value = ?, start_date = ?, end_date = ?, status = ?, updated_at = NOW() 
+                                       WHERE id = ?");
+                $stmt->execute([
+                    $_POST['name'],
+                    $_POST['type'],
+                    $_POST['value'],
+                    $_POST['start_date'],
+                    $_POST['end_date'],
+                    $_POST['status'],
+                    $_POST['id']
+                ]);
                 break;
-                
+
             case 'delete':
                 $stmt = $pdo->prepare("DELETE FROM discounts WHERE id = ?");
                 $stmt->execute([$_POST['id']]);
                 break;
         }
+
+        // Redirect to avoid form resubmission
         header('Location: discounts.php');
         exit();
     }
 }
 
-// Get discounts with product names from database
+// Get discounts with product names
 try {
     $discounts = $pdo->query("
         SELECT d.*, p.name as product_name 
         FROM discounts d 
         LEFT JOIN products p ON d.product_id = p.id 
         ORDER BY d.created_at DESC
-    ")->fetchAll();
+    ")->fetchAll(PDO::FETCH_ASSOC);
 } catch (Exception $e) {
-    // Fallback to dummy data if database fails
     $discounts = [];
 }
 
-// Get products for dropdown from database
+// ✅ Get products for the dropdown in the discount modal
 try {
-    $products = $pdo->query("SELECT * FROM products WHERE status = 'active' ORDER BY name")->fetchAll();
+    $products = $pdo->query("
+        SELECT id, name 
+        FROM products 
+        WHERE status = 'active' 
+        ORDER BY name
+    ")->fetchAll(PDO::FETCH_ASSOC);
 } catch (Exception $e) {
-    // Fallback to dummy products if database fails
     $products = [];
 }
 
 // Dummy data for demonstration (use when database is empty or for testing)
-$dummyDiscounts = [
-    [
-        'id' => 1,
-        'name' => 'Summer Sale',
-        'product_name' => 'iPhone 15 Pro',
-        'product_id' => 1,
-        'type' => 'percentage',
-        'value' => 15,
-        'start_date' => '2025-06-01',
-        'end_date' => '2025-08-31',
-        'status' => 'active',
-        'created_at' => '2025-06-01 00:00:00'
-    ],
-    [
-        'id' => 2,
-        'name' => 'Flash Sale',
-        'product_name' => 'MacBook Air',
-        'product_id' => 2,
-        'type' => 'fixed',
-        'value' => 200,
-        'start_date' => '2025-06-15',
-        'end_date' => '2025-06-17',
-        'status' => 'active',
-        'created_at' => '2025-06-15 00:00:00'
-    ],
-    [
-        'id' => 3,
-        'name' => 'Winter Clearance',
-        'product_name' => 'Samsung Galaxy S24',
-        'product_id' => 3,
-        'type' => 'percentage',
-        'value' => 25,
-        'start_date' => '2024-12-01',
-        'end_date' => '2025-02-28',
-        'status' => 'inactive',
-        'created_at' => '2024-12-01 00:00:00'
-    ],
-    [
-        'id' => 4,
-        'name' => 'New Customer Discount',
-        'product_name' => 'AirPods Pro',
-        'product_id' => 4,
-        'type' => 'fixed',
-        'value' => 50,
-        'start_date' => '2025-05-01',
-        'end_date' => '2025-12-31',
-        'status' => 'active',
-        'created_at' => '2025-05-01 00:00:00'
-    ]
-];
 
-$dummyProducts = [
-    ['id' => 1, 'name' => 'iPhone 15 Pro', 'status' => 'active'],
-    ['id' => 2, 'name' => 'MacBook Air', 'status' => 'active'],
-    ['id' => 3, 'name' => 'Samsung Galaxy S24', 'status' => 'active'],
-    ['id' => 4, 'name' => 'AirPods Pro', 'status' => 'active'],
-    ['id' => 5, 'name' => 'iPad Pro', 'status' => 'active'],
-    ['id' => 6, 'name' => 'Apple Watch', 'status' => 'active']
-];
+
+
 
 // Use dummy data if database is empty (for demonstration)
-if (empty($discounts)) {
-    $discounts = $dummyDiscounts;
-}
+// if (empty($discounts)) {
+//     $discounts = $dummyDiscounts;
+// }
 
-if (empty($products)) {
-    $products = $dummyProducts;
-}
+// if (empty($products)) {
+//     $products = $dummyProducts;
+// }
 
 // Get discount for editing
 $editDiscount = null;
@@ -546,18 +524,7 @@ body {
                            placeholder="Enter discount name">
                 </div>
                 
-                <div class="form-group">
-                    <label for="product_id">Product *</label>
-                    <select id="product_id" name="product_id" required>
-                        <option value="">Select Product</option>
-                        <?php foreach ($products as $product): ?>
-                            <option value="<?php echo $product['id']; ?>" 
-                                    <?php echo ($editDiscount && $editDiscount['product_id'] == $product['id']) ? 'selected' : ''; ?>>
-                                <?php echo htmlspecialchars($product['name']); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
+                
                 
                 <div class="form-row">
                     <div class="form-group">
