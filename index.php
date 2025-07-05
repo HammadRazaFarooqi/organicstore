@@ -5,42 +5,33 @@ $database = new Database();
 $pdo = $database->getConnection(); // Get the PDO connection
 
 // Fetch all active categories
-try {
-    $catQuery = "SELECT c.id, c.name, c.description, c.status,
-           (
-               SELECT COUNT(*) 
-               FROM products p 
-               WHERE p.category_id = c.id AND p.status = 'active'
-           ) AS product_count
-    FROM categories c
-    WHERE c.status = 'active'
-    ORDER BY c.created_at DESC";
-
-    $catStmt = $pdo->prepare($catQuery);
-    $catStmt->execute();
-    $categories = $catStmt->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    die("Error fetching categories: " . $e->getMessage());
-}
+$categoriesQuery = "SELECT * FROM categories WHERE status = 'active' ORDER BY name";
+$categories = $pdo->query($categoriesQuery)->fetchAll(PDO::FETCH_ASSOC);
 
 // Fetch all active products
-$sql = "SELECT 
-            p.*, 
-            c.name as category, 
-            d.name as discount_name,
-            d.type as discount_type,
-            d.value as discount_value,
-            d.start_date,
-            d.end_date,
-            d.status as discount_status
+$productsQuery = "
+SELECT 
+        p.id,
+        p.name,
+        p.description,
+        p.price,
+        p.image,
+        p.status,
+        c.name as category_name,
+        c.id as category_id,
+        d.name as discount_name,
+        d.type as discount_type,
+        d.value as discount_value,
+        d.status as discount_status,
+        d.start_date,
+        d.end_date
         FROM products p
         LEFT JOIN categories c ON p.category_id = c.id
-        LEFT JOIN discounts d ON p.discount_id = d.id
-        WHERE p.status = 'active'";
-$stmt = $pdo->prepare($sql);
-$stmt->execute();
-$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+    LEFT JOIN discounts d ON p.discount_id = d.id
+    WHERE p.status = 'active'
+    ORDER BY p.name
+";
+$products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -758,20 +749,24 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
   </ul>
 </div>
 
+          <!--Products-->
+          <div class="clearfix"></div>
+
 
 
 
 <div class="row filter-list clearfix" id="MixItUpContainer">
   <?php foreach ($products as $product): ?>
-    <?php $categoryClass = strtolower(preg_replace('/\s+/', '', $product['category'])); ?>
-    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 mix mix_all default-item <?php echo $categoryClass; ?>">
+    <?php $categoryClass = strtolower(preg_replace('/\s+/', '', $product['category_name'])); ?>
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 mix mix_all default-item 
+    <?php echo $categoryClass; ?>">
       <div class="inner-box">
         <div class="single-item center">
         <figure class="image-box">
         <img src="admin/assets/uploads/products/<?php echo htmlspecialchars($product['image']); ?>" 
      alt="<?php echo htmlspecialchars($product['name']); ?>" 
      style="width:50%; height:50%;">
-        <div class="product-model hot"><?php echo ucfirst($product['category']); ?></div>
+        <div class="product-model hot"><?php echo ucfirst($product['category_name']); ?></div>
         </figure>
           <div class="content">
             <h3><a href="#"><?php echo htmlspecialchars($product['name']); ?></a></h3>
@@ -796,9 +791,9 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
           $discounted = max(0, $original - $discountAmount);
       ?>
       
-      <span style="text-decoration: line-through; color: #999;">
+      <small style="text-decoration: line-through; color: #999; padding-right: 1rem">
         $<?php echo number_format($original, 2); ?>
-      </span><br>
+      </small>
       
       <span style="color: #e60000; font-weight: bold;">
         $<?php echo number_format($discounted, 2); ?>
@@ -2074,26 +2069,33 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
       
    <!-- MixItUp JS -->
    <script>
+$(document).ready(function() {
+    // Initialize MixItUp for filtering
+    $('#MixItUpContainer').mixItUp({
+        selectors: {
+            target: '.mix',
+            filter: '.filter'
+        },
+        animation: {
+            duration: 300
+        }
+    });
   
   // Handle filter button clicks
-const filterButtons = document.querySelectorAll('.filter');
-
-filterButtons.forEach(button => {
-    button.addEventListener('click', function() {
-        // Remove active class from all buttons
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-        
-        // Add active class to clicked button
-        this.classList.add('active');
+    $('.filter').on('click', function() {
+        // Remove active class from all filters
+        $('.filter').removeClass('active');
+        // Add active class to clicked filter
+        $(this).addClass('active');
         
         // Get filter value
-        const filterValue = this.getAttribute('data-filter');
+        var filterValue = $(this).data('filter');
         
         // Apply filter
         if (filterValue === 'all') {
-            mixer.filter('all');
+            $('#MixItUpContainer').mixItUp('filter', 'all');
         } else {
-            mixer.filter('.' + filterValue);
+            $('#MixItUpContainer').mixItUp('filter', filterValue);
         }
     });
 });
