@@ -1,3 +1,4 @@
+
 <?php
 require_once './admin/config/database.php'; // This gives us the Database class
 
@@ -46,7 +47,7 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1"
     />
-    <title>Organic Store | Responsive HTML5 Template</title>
+    <title>Punjab Grocers & Halal Meat </title>
     <!-- Favicon -->
     <link
       rel="apple-touch-icon"
@@ -58,12 +59,34 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <link rel="stylesheet" type="text/css" href="css/responsive.css" />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+
     <!-- Fixing Internet Explorer ______________________________________-->
 
     <!--[if lt IE 9]>
       <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
       <script src="vendor/html5shiv.js"></script>
     <![endif]-->
+
+
+    <style>
+      .author-thumb.avatar {
+  width: 60px;
+  height: 60px;
+  background-color:rgb(121, 121, 122);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 20px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+    </style>
   </head>
 
   <body>
@@ -136,47 +159,48 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
 					</div> 
 				</div> -->
 
-        <div class="bottom_header">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-4 col-sm-12 col-xs-12">
-                <!-- <div class="search-box">
-                  <form action="#" class="clearfix">
-                    <input type="text" placeholder="Search..." />
-                    <button><i class="fa fa-search"></i></button>
-                  </form>
-                </div> -->
-              </div>
-              <div class="col-md-4 col-sm-5 col-xs-6 logo-responsive">
-                <div class="logo-area">
-                  <a href="index.php" class="pull-left logo"
-                    ><img src="images/logo/logo.png" alt="LOGO"
-                  /></a>
-                </div>
-              </div>
-              <div class="col-md-4 col-sm-7 col-xs-6 pdt-14">
-                <div class="login_option float_left">
-                  <div class="login_form">
-                    <!-- <div class="user">
-                      <i class="icon-photo"></i>
-                    </div> -->
-                    <!-- <div class="login-info">
-                      <div class="welcome">Welcome!</div>
-                      <form action="#" class="select-form">
-                        <div class="g-input f1 mb-30">
-                          <select
-                            class="text-capitalize selectpicker"
-                            data-style="g-select"
-                            data-width="100%"
-                          >
-                            <option value="0" selected="">Sign In</option>
-                            <option value="1">Sign In</option>
-                            <option value="2">Register Here</option>
-                          </select>
-                        </div>
-                      </form>
-                    </div> -->
-                  </div>
+        <!--<div class="bottom_header">-->
+          <!--<div class="container">-->
+          <!--  <div class="row">-->
+          <!--    <div class="col-md-4 col-sm-12 col-xs-12">-->
+          <!--      <div class="search-box">-->
+          <!--        <form action="#" class="clearfix">-->
+          <!--          <input type="text" placeholder="Search..." />-->
+          <!--          <button><i class="fa fa-search"></i></button>-->
+          <!--        </form>-->
+          <!--      </div>-->
+          <!--    </div>-->
+          <!--    <div class="col-md-4 col-sm-5 col-xs-6 logo-responsive">-->
+          <!--      <div class="logo-area">-->
+          <!--        <a href="index.php" class="pull-left logo"-->
+          <!--          ><img src="images/logo/logo.png" alt="LOGO"-->
+          <!--        /></a>-->
+          <!--      </div>-->
+          <!--    </div>-->
+          <!--    <div class="col-md-4 col-sm-7 col-xs-6 pdt-14">-->
+          <!--      <div class="login_option float_left">-->
+          <!--        <div class="login_form">-->
+          <!--          <div class="user">-->
+          <!--            <i class="icon-photo"></i>-->
+          <!--          </div>-->
+          <!--          <div class="login-info">-->
+          <!--            <div class="welcome">Welcome!</div>-->
+                      <!-- select menu -->
+          <!--            <form action="#" class="select-form">-->
+          <!--              <div class="g-input f1 mb-30">-->
+          <!--                <select-->
+          <!--                  class="text-capitalize selectpicker"-->
+          <!--                  data-style="g-select"-->
+          <!--                  data-width="100%"-->
+          <!--                >-->
+          <!--                  <option value="0" selected="">Sign In</option>-->
+          <!--                  <option value="1">Sign In</option>-->
+          <!--                  <option value="2">Register Here</option>-->
+          <!--                </select>-->
+          <!--              </div>-->
+          <!--            </form>-->
+          <!--          </div>-->
+          <!--        </div>-->
                 </div>
                 <!-- <div class="cart_option float_left">
                   <button class="cart tran3s dropdown-toggle" id="cartDropdown">
@@ -316,24 +340,24 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
       </header>
 
       <!-- Menu ******************************* -->
-      <div class="theme_menu color1_bg">
+      <div class="theme_menu color1_bg" style="position: fixed; top: 0; width: 100%; z-index: 9999;">
         <div class="container">
           <nav class="menuzord pull-left" id="main_menu">
             <ul class="menuzord-menu">
-              <li class="current_page"><a href="index.php">Home</a></li>
+              <li>
+                <a href="index.php">
+                  <img src="images/logo/logo2.png" alt="Logo" class="img-fluid" style="width:80px; height:80px; margin-top:-10px; margin-bottom:-15px" />
+                </a>
+              </li>
+              <li class="current_page"><a href="index.php" >Home</a></li>
               <li><a href="about-us.html">About us</a></li>
               <li>
                 <a href="#">store</a>
                 <ul class="dropdown">
                   <li><a href="shop.php">Groceries Items</a></li>
                   <li><a href="shop.php">Halal Meat</a></li>
-                  <!-- <li><a href="shop-single.php">Halal Meat</a></li> -->
-                  <!-- <li><a href="shop-cart.html">Cart Page</a></li>
-                  <li><a href="checkout.html">Checkout Page</a></li>
-                  <li><a href="account.html">My Account</a></li> -->
                 </ul>
               </li>
-
               <li><a href="contact.html">Contact us</a></li>
             </ul>
             <!-- End of .menuzord-menu -->
@@ -342,24 +366,23 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
 
           <!-- ******* Cart And Search Option ******** -->
           <div class="nav_side_content pull-right">
-            <ul class="icon_header">
-              <li class="border_round tran3s">
-                <a href="#"><i class="fa fa-facebook"></i></a>
-              </li>
-              <li class="border_round tran3s">
-                <a href="#"><i class="fa fa-twitter"></i></a>
-              </li>
-              <li class="border_round tran3s">
-                <a href="#"><i class="fa fa-google-plus"></i></a>
-              </li>
-              <li class="border_round tran3s">
-                <a href="#"><i class="fa fa-pinterest"></i></a>
-              </li>
-            </ul>
-          </div>
+  <ul class="icon_header">
+    <li class="border_round tran3s">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+    </li>
+    <li class="border_round tran3s">
+      <a href="#"><i class="fab fa-instagram"></i></a>
+    </li>
+    <li class="border_round tran3s">
+      <a href="#"><i class="fab fa-tiktok"></i></a>
+    </li>
+  </ul>
+</div>
+
+
           <!-- End of .nav_side_content -->
         </div>
-        <!-- End of .conatiner -->
+        <!-- End of .container -->
       </div>
       <!-- End of .theme_menu -->
 
@@ -390,12 +413,13 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
                   data-bgposition="center center"
                   data-bgfit="cover"
                   data-bgrepeat="no-repeat"
-                  class="rev-slidebg"
+                  class="rev-slidebg img-responsive"
+                  style="width: 100%; height: auto;"
                 />
                 <!-- LAYERS -->
 
                 <!-- LAYER NR. 1 -->
-                <div
+                <!-- <div
                   class="tp-caption tp-resizeme rs-parallaxlevel-3"
                   data-x="['center','center','center','center']"
                   data-hoffset="['0','0','35','0']"
@@ -413,9 +437,9 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
                   data-responsive_offset="on"
                   data-elementdelay="0.05"
                   style="z-index: 5"
-                >
-                  <img src="images/home/1.png" alt="" />
-                </div>
+                > -->
+                  <!--<img src="images/home/1.png" alt="" />-->
+                <!-- </div> -->
 
                 <!-- LAYER NR. 2 -->
                 <div
@@ -437,7 +461,7 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
                   data-elementdelay="0.05"
                   style="z-index: 5"
                 >
-                  <h1>Organic Store</h1>
+                  <!--<h1>Organic Store</h1>-->
                 </div>
 
                 <!-- LAYER NR. 3 -->
@@ -462,7 +486,7 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
                   style="z-index: 6; white-space: nowrap"
                 >
                   <h5 class="cp-title">
-                    Fruits ~ Vegetables ~ Foods ~ Cosmetics
+                    <!--Fruits ~ Vegetables ~ Foods ~ Cosmetics-->
                   </h5>
                 </div>
 
@@ -488,8 +512,8 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
                   style="z-index: 6; white-space: nowrap"
                 >
                   <h5 class="cp-title-2">
-                    We are providing highest quality Organics Products for USA
-                    almo
+                    <!--We are providing highest quality Organics Products for USA-->
+                    <!--almo-->
                   </h5>
                 </div>
               </li>
@@ -553,13 +577,13 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
                   data-start="1000"
                 >
                   <div class="banner-caption-h1">
-                    Get Blackberry <br />Pack With 50% Off
+                    <!--Get Blackberry <br />Pack With 50% Off-->
                   </div>
                   <div class="banner-caption-p">
                     <p>
-                      Great explorer of the truth, the master-builder of human
-                      happiness no sed one rejects <br />dislikes, or avoids
-                      pleasure itself, because it is pleasure.
+                      <!--Great explorer of the truth, the master-builder of human-->
+                      <!--happiness no sed one rejects <br />dislikes, or avoids-->
+                      <!--pleasure itself, because it is pleasure.-->
                     </p>
                   </div>
                   <a href="#" class="thm-btn contuct-us">shop now</a>
@@ -610,7 +634,7 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
                   data-elementdelay="0.05"
                   style="z-index: 5"
                 >
-                  <img src="images/home/3.png" alt="" />
+                  <img src="images/home/" alt="" />
                 </div>
 
                 <!-- LAYER NR. 1 -->
@@ -628,7 +652,7 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
                   data-splitout="none"
                   data-start="500"
                 >
-                  <div class="banner-caption-h2">Natural Healthy Foods</div>
+                  <div class="banner-caption-h2"></div>
                 </div>
                 <div
                   class="tp-caption tp-resizeme text-center"
@@ -645,12 +669,12 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
                   data-responsive_offset="on"
                   data-start="1400"
                 >
-                  <div class="banner-caption-h3">With Your Affortable</div>
-                  <div class="banner-caption-p">
-                    <p>
-                      Great explorer of the truth, the master-builder of human
-                      happin
-                    </p>
+                  <!--<div class="banner-caption-h3">With Your Affortable</div>-->
+                  <!--<div class="banner-caption-p">-->
+                  <!--  <p>-->
+                  <!--    Great explorer of the truth, the master-builder of human-->
+                  <!--    happin-->
+                  <!--  </p>-->
                   </div>
                   <a href="#" class="color1-bg contuct-us">shop now</a>
                 </div>
@@ -1089,7 +1113,7 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
       <section class="why_choose_us">
         <div
           class="theme_title_bg"
-          style="background-image: url(images/background/1.jpg)"
+          style="background-image: url(images/background/)"
         >
           <div class="theme_title center">
             <div class="container">
@@ -1115,11 +1139,10 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <!-- End of .icon -->
                 <div class="text float_left">
-                  <h5 class="tran3s">100% Organic Products</h5>
+                  <h5 class="tran3s"> Wide Selection of Quality Products</h5>
                   <p class="tran3s">
-                    Duis aute irure dolor in reprehenderit voluptate velit esse
-                    seds cillum dolore eu fugiat nulla pariatur excepteur sint
-                    occaecat.
+                  
+Fresh produce, pantry staples, dairy, snacks & beverages — all under one roof.
                   </p>
                 </div>
                 <!-- End of .text -->
@@ -1137,11 +1160,9 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <!-- End of .icon -->
                 <div class="text float_left">
-                  <h5 class="tran3s">Any Time, Anywhere Delivery</h5>
+                  <h5 class="tran3s">Fresh Halal Meat Daily</h5>
                   <p class="tran3s">
-                    Duis aute irure dolor in reprehenderit voluptate velit esse
-                    seds cillum dolore eu fugiat nulla pariatur excepteur sint
-                    occaecat.
+                   From beef, lamb, and chicken to goat and specialty cuts — prepared fresh every day, just the way you like.
                   </p>
                 </div>
                 <!-- End of .text -->
@@ -1159,11 +1180,9 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <!-- End of .icon -->
                 <div class="text float_left">
-                  <h5 class="tran3s">Keeps Your Family Healthy</h5>
+                  <h5 class="tran3s">Affordable & Accessible</h5>
                   <p class="tran3s">
-                    Duis aute irure dolor in reprehenderit voluptate velit esse
-                    seds cillum dolore eu fugiat nulla pariatur excepteur sint
-                    occaecat.
+                   Enjoy competitive prices without compromising on quality — right in your neighborhood.
                   </p>
                 </div>
                 <!-- End of .text -->
@@ -1181,11 +1200,9 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <!-- End of .icon -->
                 <div class="text float_left">
-                  <h5 class="tran3s">Clean, Fresh and Safety</h5>
+                  <h5 class="tran3s">Clean, Friendly & Convenient</h5>
                   <p class="tran3s">
-                    Duis aute irure dolor in reprehenderit voluptate velit esse
-                    seds cillum dolore eu fugiat nulla pariatur excepteur sint
-                    occaecat.
+                   Shop in a clean, organized store with helpful staff ready to make your visit easy.
                   </p>
                 </div>
                 <!-- End of .text -->
@@ -1497,8 +1514,8 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
       <!--Testimonials Section-->
       <section
         class="testimonials-section"
-        style="background-image: url(images/parallax/1.jpg)"
-      >
+        style="background-image: url((images/background/Testimonial.jpg)"
+      >Testimonial.jpg
         <div class="container">
           <div class="theme_title">
             <h2>testimonials</h2>
@@ -1520,9 +1537,9 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                   </div>
                   <div class="info clearfix">
-                    <div class="author-thumb">
-                      <img src="images/team/a1.png" alt="" />
-                    </div>
+                  <div class="author-thumb avatar">
+                    <span>W</span>
+                  </div>
                     <div class="author">William Border</div>
                     <div class="author-title">Designer</div>
                   </div>
@@ -1546,9 +1563,9 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                   </div>
                   <div class="info clearfix">
-                    <div class="author-thumb">
-                      <img src="images/team/a2.png" alt="" />
-                    </div>
+                  <div class="author-thumb avatar">
+  <span>J</span>
+</div>
                     <div class="author">Jessy Federar</div>
                     <div class="author-title">Cor.Manager</div>
                   </div>
@@ -1572,169 +1589,16 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                   </div>
                   <div class="info clearfix">
-                    <div class="author-thumb">
-                      <img src="images/team/a3.png" alt="" />
-                    </div>
+                  <div class="author-thumb avatar">
+  <span>M</span>
+</div>
                     <div class="author">Mark Antony</div>
                     <div class="author-title">Designer</div>
                   </div>
                 </div>
               </div>
             </div>
-            <!--Slide Item-->
-            <div class="slide-item">
-              <div class="inner-box">
-                <div class="content">
-                  <div class="text-bg">
-                    <div class="quote-icon">
-                      <span class="fa fa-quote-left"></span>
-                    </div>
-                    <div class="text">
-                      Who do not know how to pursue an sed pleasure rationally
-                      encounter that are extremely win painful nor again is
-                      there anyone who loves or pursues or desires obtain pain
-                      itself circumstances.
-                    </div>
-                  </div>
-                  <div class="info clearfix">
-                    <div class="author-thumb">
-                      <img src="images/team/a1.png" alt="" />
-                    </div>
-                    <div class="author">William Border</div>
-                    <div class="author-title">Designer</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!--Slide Item-->
-            <div class="slide-item">
-              <div class="inner-box">
-                <div class="content">
-                  <div class="text-bg">
-                    <div class="quote-icon">
-                      <span class="fa fa-quote-left"></span>
-                    </div>
-                    <div class="text">
-                      Who do not know how to pursue an sed pleasure rationally
-                      encounter that are extremely win painful nor again is
-                      there anyone who loves or pursues or desires obtain pain
-                      itself circumstances.
-                    </div>
-                  </div>
-                  <div class="info clearfix">
-                    <div class="author-thumb">
-                      <img src="images/team/a2.png" alt="" />
-                    </div>
-                    <div class="author">Jessy Federar</div>
-                    <div class="author-title">Cor.Manager</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!--Slide Item-->
-            <div class="slide-item">
-              <div class="inner-box">
-                <div class="content">
-                  <div class="text-bg">
-                    <div class="quote-icon">
-                      <span class="fa fa-quote-left"></span>
-                    </div>
-                    <div class="text">
-                      Who do not know how to pursue an sed pleasure rationally
-                      encounter that are extremely win painful nor again is
-                      there anyone who loves or pursues or desires obtain pain
-                      itself circumstances.
-                    </div>
-                  </div>
-                  <div class="info clearfix">
-                    <div class="author-thumb">
-                      <img src="images/team/a3.png" alt="" />
-                    </div>
-                    <div class="author">Mark Antony</div>
-                    <div class="author-title">Designer</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!--Slide Item-->
-            <div class="slide-item">
-              <div class="inner-box">
-                <div class="content">
-                  <div class="text-bg">
-                    <div class="quote-icon">
-                      <span class="fa fa-quote-left"></span>
-                    </div>
-                    <div class="text">
-                      Who do not know how to pursue an sed pleasure rationally
-                      encounter that are extremely win painful nor again is
-                      there anyone who loves or pursues or desires obtain pain
-                      itself circumstances.
-                    </div>
-                  </div>
-                  <div class="info clearfix">
-                    <div class="author-thumb">
-                      <img src="images/team/a1.png" alt="" />
-                    </div>
-                    <div class="author">William Border</div>
-                    <div class="author-title">Designer</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!--Slide Item-->
-            <div class="slide-item">
-              <div class="inner-box">
-                <div class="content">
-                  <div class="text-bg">
-                    <div class="quote-icon">
-                      <span class="fa fa-quote-left"></span>
-                    </div>
-                    <div class="text">
-                      Who do not know how to pursue an sed pleasure rationally
-                      encounter that are extremely win painful nor again is
-                      there anyone who loves or pursues or desires obtain pain
-                      itself circumstances.
-                    </div>
-                  </div>
-                  <div class="info clearfix">
-                    <div class="author-thumb">
-                      <img src="images/team/a2.png" alt="" />
-                    </div>
-                    <div class="author">Jessy Federar</div>
-                    <div class="author-title">Cor.Manager</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!--Slide Item-->
-            <div class="slide-item">
-              <div class="inner-box">
-                <div class="content">
-                  <div class="text-bg">
-                    <div class="quote-icon">
-                      <span class="fa fa-quote-left"></span>
-                    </div>
-                    <div class="text">
-                      Who do not know how to pursue an sed pleasure rationally
-                      encounter that are extremely win painful nor again is
-                      there anyone who loves or pursues or desires obtain pain
-                      itself circumstances.
-                    </div>
-                  </div>
-                  <div class="info clearfix">
-                    <div class="author-thumb">
-                      <img src="images/team/a3.png" alt="" />
-                    </div>
-                    <div class="author">Mark Antony</div>
-                    <div class="author-title">Designer</div>
-                  </div>
-                </div>
-              </div>
-            </div>
+           
           </div>
         </div>
       </section>
@@ -1751,7 +1615,7 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
               <img src="images/partner-logo/2.png" alt="logo" />
             </div>
             <div class="item">
-              <img src="images/partner-logo/3.png" alt="logo" />
+              <img src="images/partner-logo/2.png" alt="logo" />
             </div>
             <div class="item">
               <img src="images/partner-logo/4.png" alt="logo" />
@@ -1829,158 +1693,57 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
 
       <!-- Footer************************* -->
       <footer>
-        <div class="main_footer">
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 footer_logo">
-                <a href="index.php"
-                  ><img src="images/logo/logo-2.png" alt="Logo"
-                /></a>
-                <p>
-                  Denouncing pleasures and praising pain was born and I will
-                  give you a complete account of the system.
-                </p>
+      <div class="main_footer py-5 bg-light">
+        <div class="container">
+      <div class="row">
 
-                <a href="#" class="tran3s">buy theme</a>
-              </div>
-              <!-- End of .footer_logo -->
-
-              <!-- <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 footer_news">
-                <h5>recent post</h5>
-
-                <div class="recent-posts">
-                  <div class="post">
-                    <div class="post-thumb">
-                      <a href="#"><img src="images/blog/p1.jpg" alt="" /></a>
-                    </div>
-                    <h4>
-                      <a href="#">Control your cholestrol & fat in 2 weeks</a>
-                    </h4>
-                    <div class="post-info">
-                      <i class="fa fa-clock-o"></i>08th Sep, 2015
-                    </div>
-                  </div>
-                  <div class="post">
-                    <div class="post-thumb">
-                      <a href="#"><img src="images/blog/p2.jpg" alt="" /></a>
-                    </div>
-                    <h4>
-                      <a href="#">Control your cholestrol & fat in 2 weeks</a>
-                    </h4>
-                    <div class="post-info">
-                      <i class="fa fa-clock-o"></i>08th Sep, 2015
-                    </div>
-                  </div>
-                  <div class="post">
-                    <div class="post-thumb">
-                      <a href="#"><img src="images/blog/p3.jpg" alt="" /></a>
-                    </div>
-                    <h4>
-                      <a href="#">Control your cholestrol & fat in 2 weeks</a>
-                    </h4>
-                    <div class="post-info">
-                      <i class="fa fa-clock-o"></i>08th Sep, 2015
-                    </div>
-                  </div>
-                </div>
-              </div> -->
-              <!-- End of .footer_news -->
-
-              <div
-                class="col-lg-3 col-md-6 col-sm-6 col-xs-12 footer_subscribe"
-              >
-                <h5>categoreis</h5>
-                <ul class="list catagories">
-                  <li>
-                    <a href="#"
-                      ><i class="fa fa-angle-right"></i>Groceries Items</a
-                    >
-                  </li>
-                  <li>
-                    <a href="#"><i class="fa fa-angle-right"></i>Halal Meat</a>
-                  </li>
-                  <!-- <li>
-                    <a href="#"
-                      ><i class="fa fa-angle-right"></i>Shop Our Prodcuts</a
-                    >
-                  </li> -->
-                </ul>
-              </div>
-              <!-- End of .footer_subscribe -->
-
-              <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 footer_contact">
-                <h5>Get In Touch</h5>
-                <ul class="list catagories">
-                  <li>
-                    <a href="#"
-                      ><i class="fa fa-envelope"></i>Organic store@gmail.com</a
-                    >
-                  </li>
-                  <li>
-                    <a href="#"
-                      ><i class="fa fa-phone"></i>+91 (321) 758 142 5698</a
-                    >
-                  </li>
-                  <li>
-                    <a href="#"
-                      ><i class="fa fa-home"></i>No 271, Red Cross Building,
-                      Modern Street, Newyork City, USA.</a
-                    >
-                  </li>
-                </ul>
-              </div>
-              <!-- End of .footer_contact -->
-              <h5>Business Hours</h5>
-              <div class="list Business">
-                <p>
-                  Monday - Friday: 09.00am to 07.00pm <br />Saturday: 10.00am to
-                  05.00pm <br />Sunday: <span>Closed</span>
-                </p>
-              </div>
-            </div>
-          </div>
+        <!-- Footer Logo & Description -->
+        <div class="col-lg-3 col-md-6 mb-4 footer_logo">
+        <h3 style="color: white;" class="h4 fw-bold">PUNJAB GROCERS & <br> HALAL MEAT</h3>
+        <p class="small text-muted">
+            Denouncing pleasures and praising pain was born and I will give you a complete account of the system.
+          </p>
+          <a href="#" class="small text-decoration-none">Developed by Tech Joint Solution</a>
         </div>
-        <!-- End of .main_footer -->
 
-        <div class="bottom_footer clear_fix">
-          <!-- <div class="container">
-            <h6 class="pull-left">
-              Copyrights © 2015 All Rights Reserved by<a
-                href="http://themeforest.net/user/steelthemes/portfolio"
-                target="_blank"
-                >Steelthemes</a
-              >
-            </h6>
-            <ul class="social_icon pull-right">
-              <li>
-                <a href="" class="tran3s"
-                  ><i class="fa fa-cc-visa" aria-hidden="true"></i
-                ></a>
-              </li>
-              <li>
-                <a href="" class="tran3s"
-                  ><i class="fa fa-cc-mastercard" aria-hidden="true"></i
-                ></a>
-              </li>
-              <li>
-                <a href="" class="tran3s"
-                  ><i class="fa fa-paypal" aria-hidden="true"></i
-                ></a>
-              </li>
-              <li>
-                <a href="" class="tran3s"
-                  ><i class="fa fa-credit-card-alt" aria-hidden="true"></i
-                ></a>
-              </li>
-              <li>
-                <a href="" class="tran3s"
-                  ><i class="fa fa-cc-discover" aria-hidden="true"></i
-                ></a>
-              </li>
-            </ul>
-          </div> -->
+        <!-- Categories -->
+        <div class="col-lg-3 col-md-6 mb-4 footer_subscribe">
+          <h5 class="fw-semibold">Categories</h5>
+          <ul class="list-unstyled small">
+            <li><a href="#" class="text-muted"><i class="fa fa-angle-right me-2"></i>Groceries Items</a></li>
+            <li><a href="#" class="text-muted"><i class="fa fa-angle-right me-2"></i>Halal Meat</a></li>
+          </ul>
         </div>
-      </footer>
+
+        <!-- Contact Info -->
+        <div class="col-lg-3 col-md-6 mb-4 footer_contact">
+          <h5 class="fw-semibold">Get In Touch</h5>
+          <ul class="list-unstyled small">
+            <li><a href="mailto:punjabgrocerhalalmeat@gmail.com" class="text-muted"><i class="fa fa-envelope me-2"></i>punjabgrocerhalalmeat@gmail.com</a></li>
+            <li><a href="tel:+19054517666" class="text-muted"><i class="fa fa-phone me-2"></i>(905) 451‑7666</a></li>
+            <li><a href="#" class="text-muted"><i class="fa fa-home me-2"></i>5 Montpelier St, Unit 106, 107, Brampton, ON L6Y 6H4</a></li>
+          </ul>
+        </div>
+
+        <!-- Business Hours -->
+        <div class="col-lg-3 col-md-6 mb-4 footer_hours">
+          <h5 class="fw-semibold">Business Hours</h5>
+          <p class="small text-muted mb-1">Monday - Friday: 09:00 AM to 07:00 PM</p>
+          <p class="small text-muted mb-1">Saturday: 10:00 AM to 05:00 PM</p>
+          <p class="small text-muted">Sunday: <span class="text-danger fw-bold">Closed</span></p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Footer -->
+  <div class="bottom_footer text-center py-3 bg-dark text-white">
+    <p class="mb-0 small">© 2025 Punjab Grocers. All rights reserved.</p>
+  </div>
+</footer>
+
+
 
       <!-- Scroll Top Button -->
       <button class="scroll-top tran3s color2_bg">

@@ -126,6 +126,8 @@ try {
     <!-- Custom Css -->
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <link rel="stylesheet" type="text/css" href="css/responsive.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
 
     <!-- Fixing Internet Explorer ______________________________________-->
 
@@ -138,184 +140,27 @@ try {
   <body>
     <div class="main_page">
       <!-- Header *******************************  -->
-      <header>
-        <!-- <div class="top_header">
-					<div class="container">
-						<div class="pull-left header_left">
-							<ul>
-		        				<li><a href="#">Order On Phone: <span>+321 453 68 739</span></a></li>
-		        				<li><i class="fa fa-envelope-o s_color" aria-hidden="true"></i><a href="#">organicstore@gmail.com</a></li>
-		        			</ul>
-						</div>
-
-						<div class="pull-right header_right">
-							<div class="state" id="value1">
-								<ul>
-			        				<li><i class="fa fa-user s_color" aria-hidden="true"></i><a href="#">Account</a></li>
-			        				<li><i class="fa fa-heart s_color" aria-hidden="true"></i><a href="#">Whishlist </a></li>
-			        				<li><i class="fa fa-truck s_color" aria-hidden="true"></i><a href="#">Whishlist</a></li>
-			        			</ul>
-			        			<div id="polyglotLanguageSwitcher">
-									<form action="#">
-										<select id="polyglot-language-options">
-											<option id="en" value="en" selected>English</option>
-											<option id="fr" value="fr">French</option>
-											<option id="de" value="de">German</option>
-											<option id="it" value="it">Italian</option>
-											<option id="es" value="es">Spanish</option>
-										</select>
-									</form>
-								</div>
-							</div>
-
-								
-						</div>
-					</div> 
-				</div>  -->
-
-        <div class="bottom_header">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-4 col-sm-12 col-xs-12">
-                <div class="search-box">
-                  <form action="#" class="clearfix">
-                    <input type="text" placeholder="Search..." />
-                    <button><i class="fa fa-search"></i></button>
-                  </form>
-                </div>
-              </div>
-              <div class="col-md-4 col-sm-5 col-xs-6 logo-responsive">
-                <div class="logo-area">
-                  <a href="index.php" class="pull-left logo"
-                    ><img src="images/logo/logo.png" alt="LOGO"
-                  /></a>
-                </div>
-              </div>
-              <div class="col-md-4 col-sm-7 col-xs-6 pdt-14">
-                <div class="login_option float_left">
-                  <div class="login_form">
-                    <div class="user">
-                      <i class="icon-photo"></i>
-                    </div>
-                    <div class="login-info">
-                      <div class="welcome">Welcome!</div>
-                      <!-- select menu -->
-                      <form action="#" class="select-form">
-                        <div class="g-input f1 mb-30">
-                          <select
-                            class="text-capitalize selectpicker"
-                            data-style="g-select"
-                            data-width="100%"
-                          >
-                            <option value="0" selected="">Sign In</option>
-                            <option value="1">Sign In</option>
-                            <option value="2">Register Here</option>
-                          </select>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                  <!-- End of .cart_list -->
-                </div>
-                <!-- <div class="cart_option float_left">
-                  <button class="cart tran3s dropdown-toggle" id="cartDropdown">
-                    <i class="fa icon-icon-32846" aria-hidden="true"></i
-                    ><span class="s_color_bg p_color">2</span>
-                  </button> -->
-                  <!-- <div class="cart-info">
-                    <div>My Cart</div>
-                    <div class="doller">84.00$</div>
-                  </div>
-
-                  <div class="cart_list color2_bg" aria-labelledby="cartDropdown">
-							   			<ul>
-							   				<li>
-							   					<div class="cart_item_wrapper clear_fix">
-							   						<div class="img_holder float_left"><img src="images/shop/9.png" alt="Cart Image" class="img-responsive"></div> 
-
-							   						<div class="item_deatils float_left">
-							   							<h6>Turmeric Powde</h6>
-							   							<ul>
-															<li><i class="fa fa-star" aria-hidden="true"></i></li>
-															<li><i class="fa fa-star" aria-hidden="true"></i></li>
-															<li><i class="fa fa-star" aria-hidden="true"></i></li>
-															<li><i class="fa fa-star" aria-hidden="true"></i></li>
-															<li><i class="fa fa-star" aria-hidden="true"></i></li>
-														</ul>
-														<span class="font_fix">$ 34.99</span>
-							   						</div> 
-							   					</div> 
-							   				</li>
-
-							   				<li>
-							   					<div class="cart_item_wrapper clear_fix">
-							   						<div class="img_holder float_left"><img src="images/shop/10.png" alt="Cart Image" class="img-responsive"></div> 
-							   						
-							   						<div class="item_deatils float_left">
-							   							<h6>Pure Jeans Coffee</h6>
-							   							<ul>
-															<li><i class="fa fa-star" aria-hidden="true"></i></li>
-															<li><i class="fa fa-star" aria-hidden="true"></i></li>
-															<li><i class="fa fa-star" aria-hidden="true"></i></li>
-															<li><i class="fa fa-star" aria-hidden="true"></i></li>
-															<li><i class="fa fa-star" aria-hidden="true"></i></li>
-														</ul>
-														<span class="font_fix">$ 26.99</span>
-							   						</div> 
-							   					</div> 
-							   				</li>
-
-							   				<li>
-							   					<div class="cart_item_wrapper clear_fix">
-							   						<div class="img_holder float_left"><img src="images/shop/11.png" alt="Cart Image" class="img-responsive"></div> 
-							   						
-							   						<div class="item_deatils float_left">
-							   							<h6>Columbia Chocolate</h6>
-							   							<ul>
-															<li><i class="fa fa-star" aria-hidden="true"></i></li>
-															<li><i class="fa fa-star" aria-hidden="true"></i></li>
-															<li><i class="fa fa-star" aria-hidden="true"></i></li>
-															<li><i class="fa fa-star" aria-hidden="true"></i></li>
-															<li><i class="fa fa-star" aria-hidden="true"></i></li>
-														</ul>
-														<span class="font_fix">$ 26.99</span>
-							   						</div> 
-							   					</div> 
-							   				</li>
-							   			</ul>
-
-							   			<div class="cart_total clear_fix">
-
-							   				<span class="total font_fix float_left">Total - 140$</span>
-							   				<a href="#" class="s_color_bg float_right tran3s">View Cart</a>
-							   			</div>
-							   		</div> 
-                </div>
-              </div> -->
-            </div>
-          </div>
-        </div>
-        <!-- End of .bottom_header -->
-      </header>
+     
 
       <!-- Menu ******************************* -->
-      <div class="theme_menu color1_bg">
+      <div class="theme_menu color1_bg" style="position: fixed; top: 0; width: 100%; z-index: 9999;">
         <div class="container">
           <nav class="menuzord pull-left" id="main_menu">
             <ul class="menuzord-menu">
-              <li class="current_page"><a href="index.php">Home</a></li>
+              <li>
+                <a href="index.php">
+                  <img src="images/logo/logo2.png" alt="Logo" class="img-fluid" style="width:80px; height:80px; margin-top:-10px; margin-bottom:-15px" />
+                </a>
+              </li>
+              <li class="current_page"><a href="index.php" >Home</a></li>
               <li><a href="about-us.html">About us</a></li>
               <li>
                 <a href="#">store</a>
                 <ul class="dropdown">
-                  <li><a href="shop.html">Groceries Items</a></li>
-                  <li><a href="shop-single.php">Halal Meat</a></li>
-                  <!-- <li><a href="shop-cart.html">Cart Page</a></li>
-                  <li><a href="checkout.html">Checkout Page</a></li>
-                  <li><a href="account.html">My Account</a></li> -->
+                  <li><a href="shop.php">Groceries Items</a></li>
+                  <li><a href="shop.php">Halal Meat</a></li>
                 </ul>
               </li>
-
               <li><a href="contact.html">Contact us</a></li>
             </ul>
             <!-- End of .menuzord-menu -->
@@ -324,24 +169,23 @@ try {
 
           <!-- ******* Cart And Search Option ******** -->
           <div class="nav_side_content pull-right">
-            <ul class="icon_header">
-              <li class="border_round tran3s">
-                <a href="#"><i class="fa fa-facebook"></i></a>
-              </li>
-              <li class="border_round tran3s">
-                <a href="#"><i class="fa fa-twitter"></i></a>
-              </li>
-              <li class="border_round tran3s">
-                <a href="#"><i class="fa fa-google-plus"></i></a>
-              </li>
-              <li class="border_round tran3s">
-                <a href="#"><i class="fa fa-pinterest"></i></a>
-              </li>
-            </ul>
-          </div>
+  <ul class="icon_header">
+    <li class="border_round tran3s">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+    </li>
+    <li class="border_round tran3s">
+      <a href="#"><i class="fab fa-instagram"></i></a>
+    </li>
+    <li class="border_round tran3s">
+      <a href="#"><i class="fab fa-tiktok"></i></a>
+    </li>
+  </ul>
+</div>
+
+
           <!-- End of .nav_side_content -->
         </div>
-        <!-- End of .conatiner -->
+        <!-- End of .container -->
       </div>
       <!-- End of .theme_menu -->
 
@@ -596,158 +440,55 @@ try {
 
       <!-- Footer************************* -->
       <footer>
-        <div class="main_footer">
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 footer_logo">
-                <a href="index.php"
-                  ><img src="images/logo/logo-2.png" alt="Logo"
-                /></a>
-                <p>
-                  Denouncing pleasures and praising pain was born and I will
-                  give you a complete account of the system.
-                </p>
+      <div class="main_footer py-5 bg-light">
+        <div class="container">
+      <div class="row">
 
-                <a href="#" class="tran3s">buy theme</a>
-              </div>
-              <!-- End of .footer_logo -->
-
-              <!-- <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 footer_news">
-                <h5>recent post</h5>
-
-                <div class="recent-posts">
-                  <div class="post">
-                    <div class="post-thumb">
-                      <a href="#"><img src="images/blog/p1.jpg" alt="" /></a>
-                    </div>
-                    <h4>
-                      <a href="#">Control your cholestrol & fat in 2 weeks</a>
-                    </h4>
-                    <div class="post-info">
-                      <i class="fa fa-clock-o"></i>08th Sep, 2015
-                    </div>
-                  </div>
-                  <div class="post">
-                    <div class="post-thumb">
-                      <a href="#"><img src="images/blog/p2.jpg" alt="" /></a>
-                    </div>
-                    <h4>
-                      <a href="#">Control your cholestrol & fat in 2 weeks</a>
-                    </h4>
-                    <div class="post-info">
-                      <i class="fa fa-clock-o"></i>08th Sep, 2015
-                    </div>
-                  </div>
-                  <div class="post">
-                    <div class="post-thumb">
-                      <a href="#"><img src="images/blog/p3.jpg" alt="" /></a>
-                    </div>
-                    <h4>
-                      <a href="#">Control your cholestrol & fat in 2 weeks</a>
-                    </h4>
-                    <div class="post-info">
-                      <i class="fa fa-clock-o"></i>08th Sep, 2015
-                    </div>
-                  </div>
-                </div>
-              </div> -->
-              <!-- End of .footer_news -->
-
-              <div
-                class="col-lg-3 col-md-6 col-sm-6 col-xs-12 footer_subscribe"
-              >
-                <h5>categoreis</h5>
-                <ul class="list catagories">
-                  <li>
-                    <a href="#"
-                      ><i class="fa fa-angle-right"></i>Groceries Items</a
-                    >
-                  </li>
-                  <li>
-                    <a href="#"><i class="fa fa-angle-right"></i>Halal Meat</a>
-                  </li>
-                  <!-- <li>
-                    <a href="#"
-                      ><i class="fa fa-angle-right"></i>Shop Our Prodcuts</a
-                    >
-                  </li> -->
-                </ul>
-              </div>
-              <!-- End of .footer_subscribe -->
-
-              <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 footer_contact">
-                <h5>Get In Touch</h5>
-                <ul class="list catagories">
-                  <li>
-                    <a href="#"
-                      ><i class="fa fa-envelope"></i>Organic store@gmail.com</a
-                    >
-                  </li>
-                  <li>
-                    <a href="#"
-                      ><i class="fa fa-phone"></i>+91 (321) 758 142 5698</a
-                    >
-                  </li>
-                  <li>
-                    <a href="#"
-                      ><i class="fa fa-home"></i>No 271, Red Cross Building,
-                      Modern Street, Newyork City, USA.</a
-                    >
-                  </li>
-                </ul>
-              </div>
-              <!-- End of .footer_contact -->
-              <h5>Business Hours</h5>
-              <div class="list Business">
-                <p>
-                  Monday - Friday: 09.00am to 07.00pm <br />Saturday: 10.00am to
-                  05.00pm <br />Sunday: <span>Closed</span>
-                </p>
-              </div>
-            </div>
-          </div>
+        <!-- Footer Logo & Description -->
+        <div class="col-lg-3 col-md-6 mb-4 footer_logo">
+        <h3 style="color: white;" class="h4 fw-bold">PUNJAB GROCERS & <br> HALAL MEAT</h3>
+        <p class="small text-muted">
+            Denouncing pleasures and praising pain was born and I will give you a complete account of the system.
+          </p>
+          <a href="#" class="small text-decoration-none">Developed by Tech Joint Solution</a>
         </div>
-        <!-- End of .main_footer -->
 
-        <div class="bottom_footer clear_fix">
-          <!-- <div class="container">
-            <h6 class="pull-left">
-              Copyrights © 2015 All Rights Reserved by<a
-                href="http://themeforest.net/user/steelthemes/portfolio"
-                target="_blank"
-                >Steelthemes</a
-              >
-            </h6>
-            <ul class="social_icon pull-right">
-              <li>
-                <a href="" class="tran3s"
-                  ><i class="fa fa-cc-visa" aria-hidden="true"></i
-                ></a>
-              </li>
-              <li>
-                <a href="" class="tran3s"
-                  ><i class="fa fa-cc-mastercard" aria-hidden="true"></i
-                ></a>
-              </li>
-              <li>
-                <a href="" class="tran3s"
-                  ><i class="fa fa-paypal" aria-hidden="true"></i
-                ></a>
-              </li>
-              <li>
-                <a href="" class="tran3s"
-                  ><i class="fa fa-credit-card-alt" aria-hidden="true"></i
-                ></a>
-              </li>
-              <li>
-                <a href="" class="tran3s"
-                  ><i class="fa fa-cc-discover" aria-hidden="true"></i
-                ></a>
-              </li>
-            </ul>
-          </div> -->
+        <!-- Categories -->
+        <div class="col-lg-3 col-md-6 mb-4 footer_subscribe">
+          <h5 class="fw-semibold">Categories</h5>
+          <ul class="list-unstyled small">
+            <li><a href="#" class="text-muted"><i class="fa fa-angle-right me-2"></i>Groceries Items</a></li>
+            <li><a href="#" class="text-muted"><i class="fa fa-angle-right me-2"></i>Halal Meat</a></li>
+          </ul>
         </div>
-      </footer>
+
+        <!-- Contact Info -->
+        <div class="col-lg-3 col-md-6 mb-4 footer_contact">
+          <h5 class="fw-semibold">Get In Touch</h5>
+          <ul class="list-unstyled small">
+            <li><a href="mailto:punjabgrocerhalalmeat@gmail.com" class="text-muted"><i class="fa fa-envelope me-2"></i>punjabgrocerhalalmeat@gmail.com</a></li>
+            <li><a href="tel:+19054517666" class="text-muted"><i class="fa fa-phone me-2"></i>(905) 451‑7666</a></li>
+            <li><a href="#" class="text-muted"><i class="fa fa-home me-2"></i>5 Montpelier St, Unit 106, 107, Brampton, ON L6Y 6H4</a></li>
+          </ul>
+        </div>
+
+        <!-- Business Hours -->
+        <div class="col-lg-3 col-md-6 mb-4 footer_hours">
+          <h5 class="fw-semibold">Business Hours</h5>
+          <p class="small text-muted mb-1">Monday - Friday: 09:00 AM to 07:00 PM</p>
+          <p class="small text-muted mb-1">Saturday: 10:00 AM to 05:00 PM</p>
+          <p class="small text-muted">Sunday: <span class="text-danger fw-bold">Closed</span></p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Footer -->
+  <div class="bottom_footer text-center py-3 bg-dark text-white">
+    <p class="mb-0 small">© 2025 Punjab Grocers. All rights reserved.</p>
+  </div>
+</footer>
       <!-- Scroll Top Button -->
       <button class="scroll-top tran3s color2_bg">
         <span class="fa fa-angle-up"></span>
