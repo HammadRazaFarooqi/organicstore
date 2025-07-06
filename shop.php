@@ -1,41 +1,52 @@
+
 <?php
-require_once './admin/config/database.php'; // This gives access to the Database class
+require_once './admin/config/database.php'; // This gives us the Database class
 
 $database = new Database();
 $pdo = $database->getConnection(); // Get the PDO connection
 
-// Fetch all active categories
 try {
-    $catQuery = "SELECT c.id, c.name, c.description, c.status,
-           (
-               SELECT COUNT(*) 
-               FROM products p 
-               WHERE p.category_id = c.id AND p.status = 'active'
-           ) AS product_count
-    FROM categories c
-    WHERE c.status = 'active'
-    ORDER BY c.created_at DESC";
+  $catQuery = "SELECT c.id, c.name, c.description, c.status,
+         (
+             SELECT COUNT(*) 
+             FROM products p 
+             WHERE p.category_id = c.id AND p.status = 'active'
+         ) AS product_count
+  FROM categories c
+  WHERE c.status = 'active'
+  ORDER BY c.created_at DESC";
 
-    $catStmt = $pdo->prepare($catQuery);
-    $catStmt->execute();
-    $categories = $catStmt->fetchAll(PDO::FETCH_ASSOC);
+  $catStmt = $pdo->prepare($catQuery);
+  $catStmt->execute();
+  $categories = $catStmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
-    die("Error fetching categories: " . $e->getMessage());
+  die("Error fetching categories: " . $e->getMessage());
 }
 
 // Fetch all active products
-try {
-    $prodQuery = "SELECT p.id, p.name, p.description, p.price, p.image, p.status, c.name AS category 
-                  FROM products p 
-                  LEFT JOIN categories c ON p.category_id = c.id
-                  WHERE p.status = 'active'
-                  ORDER BY p.created_at DESC";
-    $prodStmt = $pdo->prepare($prodQuery);
-    $prodStmt->execute();
-    $products = $prodStmt->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    die("Error fetching products: " . $e->getMessage());
-}
+$productsQuery = "
+SELECT 
+        p.id,
+        p.name,
+        p.description,
+        p.price,
+        p.image,
+        p.status,
+        c.name as category_name,
+        c.id as category_id,
+        d.name as discount_name,
+        d.type as discount_type,
+        d.value as discount_value,
+        d.status as discount_status,
+        d.start_date,
+        d.end_date
+        FROM products p
+        LEFT JOIN categories c ON p.category_id = c.id
+    LEFT JOIN discounts d ON p.discount_id = d.id
+    WHERE p.status = 'active'
+    ORDER BY p.name
+";
+$products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 
@@ -126,6 +137,8 @@ try {
     <!-- Custom Css -->
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <link rel="stylesheet" type="text/css" href="css/responsive.css" />
+    <link rel="stylesheet" type="text/css" href="css/generic.css" />
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
 
@@ -147,14 +160,14 @@ try {
         <div class="container">
           <nav class="menuzord pull-left" id="main_menu">
             <ul class="menuzord-menu">
-              <li>
+            <li>
                 <a href="index.php">
-                  <img src="images/logo/logo2.png" alt="Logo" class="img-fluid" style="width:80px; height:80px; margin-top:-10px; margin-bottom:-15px" />
+                  <img src="images/logo/logo2.png" alt="Logo" class="img-fluid" style="width:50px; height:50px; margin-top:10px; margin-bottom:-15px" />
                 </a>
               </li>
-              <li class="current_page"><a href="index.php" >Home</a></li>
+              <li ><a href="index.php" >Home</a></li>
               <li><a href="about-us.html">About us</a></li>
-              <li>
+              <li class="current_page">
                 <a href="#">store</a>
                 <ul class="dropdown">
                   <li><a href="shop.php">Groceries Items</a></li>
@@ -237,33 +250,51 @@ try {
 
               <?php foreach ($products as $product): ?>
   <div class="col-md-4 col-sm-6 col-xs-12 default-item" style="display: inline-block">
-    <div class="inner-box">
-      <div class="single-item center">
-        <figure class="image-box">
-        <img src="admin/assets/uploads/products/<?php echo htmlspecialchars($product['image']); ?>" 
-     alt="<?php echo htmlspecialchars($product['name']); ?>" 
-     style="width:50%; height:50%;">
-        <div class="product-model hot"><?php echo ucfirst($product['category']); ?></div>
-        </figure>
+  <div class="product-card inner-box">
+    <div class="single-item center">
 
-        <div class="content">
-        <h3>
-  <a href="shop-single.php?id=<?php echo $product['id']; ?>">
-    <?php echo htmlspecialchars($product['name']); ?>
-  </a>
-</h3>
-          <div class="rating">
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star"></span>
-          </div>
-          <div class="price">
-            $<?php echo number_format($product['price'], 2); ?>
-            <!-- Add previous price if needed -->
-            <!-- <span class="prev-rate">$14.99</span> -->
-          </div>
+      <figure class="image-box">
+        <img class="product-image" 
+             src="admin/assets/uploads/products/<?php echo htmlspecialchars($product['image']); ?>" 
+             alt="<?php echo htmlspecialchars($product['name']); ?>">
+        <div class="product-model hot"><?php echo ucfirst($product['category_name']); ?></div>
+      </figure>
+
+      <div class="content">
+        <h3><a href="#"><?php echo htmlspecialchars($product['name']); ?></a></h3>
+        <div class="rating">
+          <span class="fa fa-star"></span><span class="fa fa-star"></span>
+          <span class="fa fa-star"></span><span class="fa fa-star"></span>
+          <span class="fa fa-star"></span>
+        </div>
+
+        <div class="price">
+          <?php if (!empty($product['discount_name']) && 
+                    $product['discount_status'] == 'active' &&
+                    strtotime($product['start_date']) <= time() && 
+                    strtotime($product['end_date']) >= time()): ?>
+            <?php
+              $original = (float)$product['price'];
+              $discountAmount = ($product['discount_type'] === 'percentage') 
+                  ? $original * ($product['discount_value'] / 100)
+                  : $product['discount_value'];
+              $discounted = max(0, $original - $discountAmount);
+            ?>
+            <small style="text-decoration: line-through; color: #999; padding-right: 1rem">
+              $<?php echo number_format($original, 2); ?>
+            </small>
+            <span style="color: #e60000; font-weight: bold;">
+              $<?php echo number_format($discounted, 2); ?>
+            </span>
+            <div class="discount-badge" style="color: green; font-size: 12px;">
+              <?php echo ($product['discount_type'] === 'percentage') 
+                  ? number_format($product['discount_value']) . '% OFF' 
+                  : 'Save $' . number_format($product['discount_value'], 2); ?>
+            </div>
+          <?php else: ?>
+            <span style="font-weight: bold;">$<?php echo number_format($product['price'], 2); ?></span>
+          <?php endif; ?>
+</div>
         </div>
         <div class="overlay-box">
             <div class="inner">
@@ -272,7 +303,7 @@ try {
                   <li class="tultip-op">
                     <span class="tultip"><i class="fa fa-sort-desc"></i>VIEW DETAILS</span>
                     <!-- <a href="/organicstore/shop-single.php"></a> -->
-                    <a href="/organicstore/shop-single.php?id=<?php echo $product['id']; ?>">
+                    <a href="/shop-single.php?id=<?php echo $product['id']; ?>">
                     <span class="icon-icon-32846"></span>
                     </a>
 
@@ -466,9 +497,9 @@ try {
         <div class="col-lg-3 col-md-6 mb-4 footer_contact">
           <h5 class="fw-semibold">Get In Touch</h5>
           <ul class="list-unstyled small">
-            <li><a href="mailto:punjabgrocerhalalmeat@gmail.com" class="text-muted"><i class="fa fa-envelope me-2"></i>punjabgrocerhalalmeat@gmail.com</a></li>
-            <li><a href="tel:+19054517666" class="text-muted"><i class="fa fa-phone me-2"></i>(905) 451‑7666</a></li>
-            <li><a href="#" class="text-muted"><i class="fa fa-home me-2"></i>5 Montpelier St, Unit 106, 107, Brampton, ON L6Y 6H4</a></li>
+            <li><a href="mailto:punjabgrocerhalalmeat@gmail.com" class="text-muted"><i class="fa fa-envelope" style="margin-right:10px;"></i>punjabgrocerhalalmeat@gmail.com</a></li>
+            <li><a href="tel:+19054517666" class="text-muted"><i class="fa fa-phone me-2"style="margin-right:10px;"></i>(905) 451‑7666</a></li>
+            <li><a href="#" class="text-muted"><i class="fa fa-home me-2"style="margin-right:10px;"></i>5 Montpelier St, Unit 106, 107, Brampton, ON L6Y 6H4</a></li>
           </ul>
         </div>
 

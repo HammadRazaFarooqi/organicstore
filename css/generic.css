@@ -1,0 +1,148 @@
+.author-thumb.avatar {
+  width: 60px;
+  height: 60px;
+  background-color: rgba(255, 255, 255);
+  color: #7fb401;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 30px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+/* Make all product cards same height */
+/* Equal card height + styling */
+.product-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 420px;
+  max-height: 450px;
+  padding: 15px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Image consistency */
+.product-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Image box fix to prevent overflow issues */
+.image-box {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Content control */
+.product-card .content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Title ellipsis for long names */
+.product-card h3 {
+  font-size: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Ensure content stretches to fill */
+.product-card .content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.row > .col-md-4 {
+  display: flex;
+}
+
+.content h3 {
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#banner {
+  position: relative;
+  overflow: hidden;
+}
+
+.swiper-slide {
+  position: relative;
+}
+
+.swiper-slide img {
+  width: 100%;
+  height: auto;
+}
+
+.slide-caption {
+  position: absolute;
+  bottom: 20%;
+  left: 10%;
+  color: #fff;
+  text-align: left;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease;
+}
+
+.swiper-slide-active .slide-caption {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.slide-caption h2 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.slide-caption p {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.thm-btn {
+  padding: 10px 25px;
+  background-color: #27ae60;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+/* Optional: slide-in animation for caption text */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.default-item {
+  padding: 20px !important;
+}

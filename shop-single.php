@@ -13,10 +13,27 @@ $product_id = intval($_GET['id']); // Sanitize input
 
 // Fetch product details
 try {
-    $query = "SELECT p.id, p.name, p.description, p.price, p.image, c.name AS category 
-              FROM products p 
-              LEFT JOIN categories c ON p.category_id = c.id
-              WHERE p.id = :id AND p.status = 'active'";
+    $query = "
+      SELECT 
+        p.id,
+        p.name,
+        p.description,
+        p.price,
+        p.image,
+        p.status,
+        c.name as category_name,
+        c.id as category_id,
+        d.name as discount_name,
+        d.type as discount_type,
+        d.value as discount_value,
+        d.status as discount_status,
+        d.start_date,
+        d.end_date
+      FROM products p
+      LEFT JOIN categories c ON p.category_id = c.id
+      LEFT JOIN discounts d ON p.discount_id = d.id
+      WHERE p.id = :id AND p.status = 'active'
+    ";
     $stmt = $pdo->prepare($query);
     $stmt->execute([':id' => $product_id]);
     $product = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -149,6 +166,24 @@ try {
       <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
       <script src="vendor/html5shiv.js"></script>
     <![endif]-->
+    
+    <style>
+      .author-thumb.avatar {
+  width: 60px;
+  height: 60px;
+  background-color:rgb(121, 121, 122);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 20px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+    </style>
   </head>
 
   <body>
@@ -158,9 +193,9 @@ try {
         <div class="container">
           <nav class="menuzord pull-left" id="main_menu">
             <ul class="menuzord-menu">
-              <li>
+            <li>
                 <a href="index.php">
-                  <img src="images/logo/logo2.png" alt="Logo" class="img-fluid" style="width:80px; height:80px; margin-top:-10px; margin-bottom:-15px" />
+                  <img src="images/logo/logo2.png" alt="Logo" class="img-fluid" style="width:50px; height:50px; margin-top:10px; margin-bottom:-15px" />
                 </a>
               </li>
               <li class="current_page"><a href="index.php" >Home</a></li>
@@ -246,30 +281,7 @@ try {
             <!-- _______________________ SIDEBAR ____________________ -->
             <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 sidebar_styleTwo">
               <div class="wrapper">
-                <div class="sidebar_search">
-                  <form action="#">
-                    <input type="text" />
-                    <button class="tran3s color1_bg">
-                      <i class="fa fa-search" aria-hidden="true"></i>
-                    </button>
-                  </form>
-                </div>
-                <!-- End of .sidebar_styleOne -->
-
-                <div class="sidebar_categories">
-                  <div class="theme_inner_title">
-                    <h4>Categories</h4>
-                  </div>
-                  <ul>
-  <?php foreach ($categories as $cat): ?>
-    <li>
-      <a href="?category=<?php echo urlencode($cat['id']); ?>" class="tran3s">
-        <?php echo htmlspecialchars($cat['name']); ?> (<?php echo $cat['product_count']; ?>)
-      </a>
-    </li>
-  <?php endforeach; ?>
-</ul>
-                </div>
+                
                 <!-- End of .sidebar_categories -->
 
                 <!-- <div class="price_filter wow fadeInUp">
@@ -376,7 +388,7 @@ try {
               <div class="wrapper">
                <!-- Product Detail Section -->
 <div class="product_top_section clear_fix">
-    <div class="img_holder float_left">
+    <div class="img_holder float_left" style="margin-bottom:20px;">
         <img src="admin/assets/uploads/products/<?php echo htmlspecialchars($product['image']); ?>" 
              alt="<?php echo htmlspecialchars($product['name']); ?>" 
              class="img-responsive" />
@@ -393,9 +405,39 @@ try {
             <li><i class="fa fa-star" aria-hidden="true"></i></li>
             <li>(2 Customer Reviews)</li>
         </ul> -->
-        <span class="item_price">$<?php echo number_format($product['price'], 2); ?></span>
+        <div class="price">
+  <?php if (!empty($product['discount_name']) && 
+            $product['discount_status'] == 'active' &&
+            strtotime($product['start_date']) <= time() && 
+            strtotime($product['end_date']) >= time()): ?>
+      
+      <?php
+          $original = (float)$product['price'];
+          $discountAmount = ($product['discount_type'] === 'percentage') 
+              ? $original * ($product['discount_value'] / 100)
+              : $product['discount_value'];
+          $discounted = max(0, $original - $discountAmount);
+      ?>
+      
+      <span  style="text-decoration: line-through; color: #999; padding-right: 1rem" class="item_price">$<?php echo number_format($product['price'], 2); ?></span>
+      
+      <span  class="item_price" style="color: #e60000; font-weight: bold;">
+        $<?php echo number_format($discounted, 2); ?>
+      </span>
+      
+      <div class="discount-badge" style="color:green; font-size: 12px;">
+          <?php echo ($product['discount_type'] === 'percentage') 
+              ? number_format($product['discount_value']) . '% OFF' 
+              : 'Save $' . number_format($product['discount_value'], 2); ?>
+      </div>
+  
+  <?php else: ?>
+      <span style="font-weight: bold;">$<?php echo number_format($product['price'], 2); ?></span>
+  <?php endif; ?>
+</div>
+
         <p><?php echo nl2br(htmlspecialchars($product['description'])); ?></p>
-        <span class="check_location">Check Delivery Option at Your Location:</span>
+        <!-- <span class="check_location">Check Delivery Option at Your Location:</span> -->
 
     </div>
 </div>
@@ -413,26 +455,7 @@ try {
                   <div class="tab-content">
                     <div id="tab1" class="tab-pane fade">
                       <p>
-                        It is a long established fact that a reader will be
-                        distracted by the readable content of a page when
-                        looking at its layout The point of using Lorem Ipsum is
-                        that it has a more-or-less normal distribution of
-                        letters, as opposed to using Content here, content
-                        here', making it look like readable English. Many
-                        desktop publishing packages and web page editors now use
-                        Lorem Ipsum as their default model text, and a search
-                        for 'lorem ipsum' will uncover many web sites still in
-                        their infancy. Various versions have evolved over the
-                        years on purpose.
-                      </p>
-                      <p style="margin-top: 10px">
-                        Distracted by the readable content of a page when
-                        looking at its layout. The point of using Lorem Ipsum is
-                        that it has a more-or-less normal distribution of
-                        letters, as opposed to using 'Content here, content
-                        here', making it look like readable English. Many
-                        desktop publishing packages and web page editors when
-                        looking.
+                      <?php echo $product['description'] ?>
                       </p>
                     </div>
                     <!-- End of #tab1 -->
@@ -441,7 +464,9 @@ try {
                       <!-- Single Review -->
                       <div class="item_review_content clear_fix">
                         <div class="img_holder float_left">
-                          <img src="images/gallery/a1.jpg" alt="img" />
+                        <div class="author-thumb avatar">
+                    <span>M</span>
+                  </div>
                         </div>
                         <!-- End of .img_holder -->
 
@@ -481,23 +506,7 @@ try {
                             anyone who loves or seds of pursues.
                           </p>
 
-                          <div class="up_down_nav">
-                            <a href="#"
-                              ><i class="fa fa-angle-up" aria-hidden="true"></i
-                            ></a>
-                            <a href="#"
-                              ><i
-                                class="fa fa-angle-down"
-                                aria-hidden="true"
-                              ></i
-                            ></a>
-                          </div>
-                          <!-- End of .up_down_nav -->
-
-                          <div class="reply_share_area">
-                            <a href="#" class="tran3s">Reply</a>
-                            <a href="#" class="tran3s">Share</a>
-                          </div>
+                          
                           <!-- End of .reply_share_area -->
                         </div>
                         <!-- End of .text -->
@@ -507,7 +516,9 @@ try {
                       <!-- Single Review -->
                       <div class="item_review_content clear_fix">
                         <div class="img_holder float_left">
-                          <img src="images/gallery/a2.jpg" alt="img" />
+                        <div class="author-thumb avatar">
+                    <span>J</span>
+                  </div>
                         </div>
                         <!-- End of .img_holder -->
 
@@ -550,23 +561,7 @@ try {
                             which toil great pleasure.
                           </p>
 
-                          <div class="up_down_nav">
-                            <a href="#"
-                              ><i class="fa fa-angle-up" aria-hidden="true"></i
-                            ></a>
-                            <a href="#"
-                              ><i
-                                class="fa fa-angle-down"
-                                aria-hidden="true"
-                              ></i
-                            ></a>
-                          </div>
-                          <!-- End of .up_down_nav -->
-
-                          <div class="reply_share_area">
-                            <a href="#" class="tran3s">Reply</a>
-                            <a href="#" class="tran3s">Share</a>
-                          </div>
+                          
                           <!-- End of .reply_share_area -->
                         </div>
                         <!-- End of .text -->
@@ -870,9 +865,9 @@ try {
         <div class="col-lg-3 col-md-6 mb-4 footer_contact">
           <h5 class="fw-semibold">Get In Touch</h5>
           <ul class="list-unstyled small">
-            <li><a href="mailto:punjabgrocerhalalmeat@gmail.com" class="text-muted"><i class="fa fa-envelope me-2"></i>punjabgrocerhalalmeat@gmail.com</a></li>
-            <li><a href="tel:+19054517666" class="text-muted"><i class="fa fa-phone me-2"></i>(905) 451‑7666</a></li>
-            <li><a href="#" class="text-muted"><i class="fa fa-home me-2"></i>5 Montpelier St, Unit 106, 107, Brampton, ON L6Y 6H4</a></li>
+            <li><a href="mailto:punjabgrocerhalalmeat@gmail.com" class="text-muted"><i class="fa fa-envelope" style="margin-right:10px;"></i>punjabgrocerhalalmeat@gmail.com</a></li>
+            <li><a href="tel:+19054517666" class="text-muted"><i class="fa fa-phone me-2"style="margin-right:10px;"></i>(905) 451‑7666</a></li>
+            <li><a href="#" class="text-muted"><i class="fa fa-home me-2"style="margin-right:10px;"></i>5 Montpelier St, Unit 106, 107, Brampton, ON L6Y 6H4</a></li>
           </ul>
         </div>
 

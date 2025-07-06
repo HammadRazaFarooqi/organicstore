@@ -10,7 +10,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1"
     />
-    <title>Organic Store | Responsive HTML5 Template</title>
+    <title>Punjab Grocery Halal Meat </title>
     <!-- Favicon -->
     <link
       rel="apple-touch-icon"
@@ -105,10 +105,10 @@
             <ul class="menuzord-menu">
               <li>
                 <a href="index.php">
-                  <img src="images/logo/logo2.png" alt="Logo" class="img-fluid" style="width:80px; height:80px; margin-top:-10px; margin-bottom:-15px" />
+                  <img src="images/logo/logo2.png" alt="Logo" class="img-fluid" style="width:50px; height:50px; margin-top:10px; margin-bottom:-15px" />
                 </a>
               </li>
-              <li class="current_page"><a href="index.php" >Home</a></li>
+              <li><a href="index.php" >Home</a></li>
               <li><a href="about-us.html">About us</a></li>
               <li>
                 <a href="#">store</a>
@@ -117,7 +117,7 @@
                   <li><a href="shop.php">Halal Meat</a></li>
                 </ul>
               </li>
-              <li><a href="contact.html">Contact us</a></li>
+              <li class="current_page"><a href="contact.html">Contact us</a></li>
             </ul>
             <!-- End of .menuzord-menu -->
           </nav>
@@ -127,13 +127,13 @@
           <div class="nav_side_content pull-right">
   <ul class="icon_header">
     <li class="border_round tran3s">
-      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.facebook.com/Punjabgrocercanada"><i class="fab fa-facebook-f"></i></a>
     </li>
     <li class="border_round tran3s">
-      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.instagram.com/punjabgrocershalalmeat/"><i class="fab fa-instagram"></i></a>
     </li>
     <li class="border_round tran3s">
-      <a href="#"><i class="fab fa-tiktok"></i></a>
+      <a href="https://www.tiktok.com/@punjabgrocershalalmeat"><i class="fab fa-tiktok"></i></a>
     </li>
   </ul>
 </div>
@@ -147,7 +147,7 @@
 
       <section
         class="breadcrumb-area"
-        style="background-image: url(images/background/2.jpg)"
+        style="background-image: url(images/background/2.png)"
       >
         <div class="container">
           <div class="row">
@@ -225,7 +225,8 @@
                 <div class="theme-title">
                   <h2>send us massege</h2>
                 </div>
-                <form action="inc/sendmail.php">
+                <form action="" method="POST">
+                  <input type="hidden" name="access_key" value="36b1dca2-35d9-44ea-9b39-4fa383db50c0">
                   <div class="row">
                     <div class="col-md-6">
                       <input type="text" placeholder="Your Name*" />
@@ -263,18 +264,47 @@
         </div>
       </section>
 
+ <style>
+        #google-map-area {
+            width: 100%;
+            padding: 20px 0;
+        }
+
+        .google-map-home {
+            width: 100%;
+            height: 450px;
+            border: none;
+            display: block;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .google-map-home iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+</style>
       <!-- Google map************************ -->
+      <!-- Google Map Section -->
       <section id="google-map-area">
-        <div
-          class="google-map-home"
+        <div class="google-map-home" 
           id="google-map"
-          data-map-lat="40.717873"
-          data-map-lng="-73.563033"
+             data-map-lat="43.632979171103045"
+             data-map-lng="-79.78667262399884"
           data-icon-path="images/logo/map.png"
-          data-map-title="Awesome Place"
-          data-map-zoom="11"
-        ></div>
-      </section>
+             data-map-title="punjabgrocerhalalmeat"
+             data-map-zoom="15">
+            <!-- Method 1: Google Maps Embed (No API Key Required) -->
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2744.847484460511!2d-79.78667262399884!3d43.632979171103045!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b6bc40cc022ed%3A0x59169dc3df8643e7!2sPunjab%20Grocers%20%26%20Halal%20Meat!5e0!3m2!1sen!2sca!4v1751758335250!5m2!1sen!2sca" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Punjab Grocers & Halal Meat Location">
+            </iframe>
+        </div>
 
       <!-- Footer************************* -->
       <footer>
@@ -304,9 +334,9 @@
           <div class="col-lg-3 col-md-6 mb-4 footer_contact">
             <h5 class="fw-semibold">Get In Touch</h5>
             <ul class="list-unstyled small">
-              <li><a href="mailto:punjabgrocerhalalmeat@gmail.com" class="text-muted"><i class="fa fa-envelope me-2"></i>punjabgrocerhalalmeat@gmail.com</a></li>
-              <li><a href="tel:+19054517666" class="text-muted"><i class="fa fa-phone me-2"></i>(905) 451‑7666</a></li>
-              <li><a href="#" class="text-muted"><i class="fa fa-home me-2"></i>5 Montpelier St, Unit 106, 107, Brampton, ON L6Y 6H4</a></li>
+              <li><a href="mailto:punjabgrocerhalalmeat@gmail.com" class="text-muted"><i class="fa fa-envelope" style="margin-right:10px;"></i>punjabgrocerhalalmeat@gmail.com</a></li>
+              <li><a href="tel:+19054517666" class="text-muted"><i class="fa fa-phone me-2"style="margin-right:10px;"></i>(905) 451‑7666</a></li>
+              <li><a href="#" class="text-muted"><i class="fa fa-home me-2"style="margin-right:10px;"></i>5 Montpelier St, Unit 106, 107, Brampton, ON L6Y 6H4</a></li>
             </ul>
           </div>
   
@@ -346,7 +376,7 @@
 
       <!-- Vendor js _________ -->
       <!-- Google map js -->
-      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRvBPo3-t31YFk588DpMYS6EqKf-oGBSI"></script>
+      <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRvBPo3-t31YFk588DpMYS6EqKf-oGBSI"></script>-->
       <!-- Gmap Helper -->
       <script src="js/gmap.js"></script>
       <!-- owl.carousel -->

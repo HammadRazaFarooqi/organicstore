@@ -12,26 +12,25 @@ $categories = $pdo->query($categoriesQuery)->fetchAll(PDO::FETCH_ASSOC);
 // Fetch all active products
 $productsQuery = "
 SELECT 
-        p.id,
-        p.name,
-        p.description,
-        p.price,
-        p.image,
-        p.status,
-        c.name as category_name,
-        c.id as category_id,
-        d.name as discount_name,
-        d.type as discount_type,
-        d.value as discount_value,
-        d.status as discount_status,
-        d.start_date,
-        d.end_date
-        FROM products p
-        LEFT JOIN categories c ON p.category_id = c.id
-    LEFT JOIN discounts d ON p.discount_id = d.id
-    WHERE p.status = 'active'
-    ORDER BY p.name
-";
+  p.id,
+  p.name,
+  p.description,
+  p.price,
+  p.image,
+  p.status,
+  c.name as category_name,
+  c.id as category_id,
+  d.name as discount_name,
+  d.type as discount_type,
+  d.value as discount_value,
+  d.status as discount_status,
+  d.start_date,
+  d.end_date
+FROM products p
+LEFT JOIN categories c ON p.category_id = c.id
+LEFT JOIN discounts d ON p.discount_id = d.id
+WHERE p.status = 'active'
+order by name limit 6"; // Limit to 6 products for the homepage
 $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
@@ -57,6 +56,7 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- Custom Css -->
     <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/generic.css" />
     <link rel="stylesheet" type="text/css" href="css/responsive.css" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -70,274 +70,11 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
     <![endif]-->
 
 
-    <style>
-      .author-thumb.avatar {
-  width: 60px;
-  height: 60px;
-  background-color:rgb(121, 121, 122);
-  color: #fff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 20px;
-  text-transform: uppercase;
-  flex-shrink: 0;
-}
-
-    </style>
+    
   </head>
 
   <body>
     <div class="main_page">
-      <!-- Header *******************************  -->
-      <header>
-        <!-- Popup -->
-        <!-- <div class="popup-overlay" id="popup">
-          <div class="popup-box">
-            <span class="close-btn" id="closePopupBtn">×</span>
-            <form id="form">
-              <input
-                type="hidden"
-                name="access_key"
-                value="547eff1c-5d39-4d72-b874-07f38a8a2ccd"
-              />
-              <div class="form-group">
-                <input
-                  type="text"
-                  name="username"
-                  placeholder="Your Name*"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email Address*"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <button type="submit">Submit now</button>
-              </div>
-            </form>
-          </div>
-        </div> -->
-        <!-- <div class="top_header">
-					<div class="container">
-						<div class="pull-left header_left">
-							<ul>
-		        				<li><a href="#">Order On Phone: <span>+321 453 68 739</span></a></li>
-		        				<li><i class="fa fa-envelope-o s_color" aria-hidden="true"></i><a href="#">organicstore@gmail.com</a></li>
-		        			</ul>
-						</div>
-
-						<div class="pull-right header_right">
-							<div class="state" id="value1">
-								<ul>
-			        				<li><i class="fa fa-user s_color" aria-hidden="true"></i><a href="#">Account</a></li>
-			        				<li><i class="fa fa-heart s_color" aria-hidden="true"></i><a href="#">Whishlist </a></li>
-			        				<li><i class="fa fa-truck s_color" aria-hidden="true"></i><a href="#">Whishlist</a></li>
-			        			</ul>
-			        			<div id="polyglotLanguageSwitcher">
-									<form action="#">
-										<select id="polyglot-language-options">
-											<option id="en" value="en" selected>English</option>
-											<option id="fr" value="fr">French</option>
-											<option id="de" value="de">German</option>
-											<option id="it" value="it">Italian</option>
-											<option id="es" value="es">Spanish</option>
-										</select>
-									</form>
-								</div>
-							</div>
-
-								
-						</div>
-					</div> 
-				</div> -->
-
-        <!--<div class="bottom_header">-->
-          <!--<div class="container">-->
-          <!--  <div class="row">-->
-          <!--    <div class="col-md-4 col-sm-12 col-xs-12">-->
-          <!--      <div class="search-box">-->
-          <!--        <form action="#" class="clearfix">-->
-          <!--          <input type="text" placeholder="Search..." />-->
-          <!--          <button><i class="fa fa-search"></i></button>-->
-          <!--        </form>-->
-          <!--      </div>-->
-          <!--    </div>-->
-          <!--    <div class="col-md-4 col-sm-5 col-xs-6 logo-responsive">-->
-          <!--      <div class="logo-area">-->
-          <!--        <a href="index.php" class="pull-left logo"-->
-          <!--          ><img src="images/logo/logo.png" alt="LOGO"-->
-          <!--        /></a>-->
-          <!--      </div>-->
-          <!--    </div>-->
-          <!--    <div class="col-md-4 col-sm-7 col-xs-6 pdt-14">-->
-          <!--      <div class="login_option float_left">-->
-          <!--        <div class="login_form">-->
-          <!--          <div class="user">-->
-          <!--            <i class="icon-photo"></i>-->
-          <!--          </div>-->
-          <!--          <div class="login-info">-->
-          <!--            <div class="welcome">Welcome!</div>-->
-                      <!-- select menu -->
-          <!--            <form action="#" class="select-form">-->
-          <!--              <div class="g-input f1 mb-30">-->
-          <!--                <select-->
-          <!--                  class="text-capitalize selectpicker"-->
-          <!--                  data-style="g-select"-->
-          <!--                  data-width="100%"-->
-          <!--                >-->
-          <!--                  <option value="0" selected="">Sign In</option>-->
-          <!--                  <option value="1">Sign In</option>-->
-          <!--                  <option value="2">Register Here</option>-->
-          <!--                </select>-->
-          <!--              </div>-->
-          <!--            </form>-->
-          <!--          </div>-->
-          <!--        </div>-->
-                </div>
-                <!-- <div class="cart_option float_left">
-                  <button class="cart tran3s dropdown-toggle" id="cartDropdown">
-                    <i class="fa icon-icon-32846" aria-hidden="true"></i
-                    ><span class="s_color_bg p_color">2</span>
-                  </button>
-                  <div class="cart-info">
-                    <div>My Cart</div>
-                    <div class="doller">84.00$</div>
-                  </div>
-
-                  <div
-                    class="cart_list color2_bg"
-                    aria-labelledby="cartDropdown"
-                  >
-                    <ul>
-                      <li>
-                        <div class="cart_item_wrapper clear_fix">
-                          <div class="img_holder float_left">
-                            <img
-                              src="images/shop/9.png"
-                              alt="Cart Image"
-                              class="img-responsive"
-                            />
-                          </div>
-
-                          <div class="item_deatils float_left">
-                            <h6>Turmeric Powde</h6>
-                            <ul>
-                              <li>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                              </li>
-                              <li>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                              </li>
-                              <li>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                              </li>
-                              <li>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                              </li>
-                              <li>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                              </li>
-                            </ul>
-                            <span class="font_fix">$ 34.99</span>
-                          </div>
-                        </div>
-                      </li>
-
-                      <li>
-                        <div class="cart_item_wrapper clear_fix">
-                          <div class="img_holder float_left">
-                            <img
-                              src="images/shop/10.png"
-                              alt="Cart Image"
-                              class="img-responsive"
-                            />
-                          </div>
-
-                          <div class="item_deatils float_left">
-                            <h6>Pure Jeans Coffee</h6>
-                            <ul>
-                              <li>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                              </li>
-                              <li>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                              </li>
-                              <li>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                              </li>
-                              <li>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                              </li>
-                              <li>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                              </li>
-                            </ul>
-                            <span class="font_fix">$ 26.99</span>
-                          </div>
-                        </div>
-                      </li>
-
-                      <li>
-                        <div class="cart_item_wrapper clear_fix">
-                          <div class="img_holder float_left">
-                            <img
-                              src="images/shop/11.png"
-                              alt="Cart Image"
-                              class="img-responsive"
-                            />
-                          </div>
-
-                          <div class="item_deatils float_left">
-                            <h6>Columbia Chocolate</h6>
-                            <ul>
-                              <li>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                              </li>
-                              <li>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                              </li>
-                              <li>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                              </li>
-                              <li>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                              </li>
-                              <li>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                              </li>
-                            </ul>
-                            <span class="font_fix">$ 26.99</span>
-                          </div>
-                        </div>
-                        
-                      </li>
-                    </ul>
-
-                    <div class="cart_total clear_fix">
-                      <span class="total font_fix float_left"
-                        >Total - 140$</span
-                      >
-                      <a href="#" class="s_color_bg float_right tran3s"
-                        >View Cart</a
-                      >
-                    </div>
-                  </div>
-                  
-                </div> -->
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- End of .bottom_header -->
-      </header>
 
       <!-- Menu ******************************* -->
       <div class="theme_menu color1_bg" style="position: fixed; top: 0; width: 100%; z-index: 9999;">
@@ -346,7 +83,7 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
             <ul class="menuzord-menu">
               <li>
                 <a href="index.php">
-                  <img src="images/logo/logo2.png" alt="Logo" class="img-fluid" style="width:80px; height:80px; margin-top:-10px; margin-bottom:-15px" />
+                  <img src="images/logo/logo2.png" alt="Logo" class="img-fluid" style="width:50px; height:50px; margin-top:10px; margin-bottom:-15px" />
                 </a>
               </li>
               <li class="current_page"><a href="index.php" >Home</a></li>
@@ -368,13 +105,13 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
           <div class="nav_side_content pull-right">
   <ul class="icon_header">
     <li class="border_round tran3s">
-      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.facebook.com/Punjabgrocercanada"><i class="fab fa-facebook-f"></i></a>
     </li>
     <li class="border_round tran3s">
-      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.instagram.com/punjabgrocershalalmeat/"><i class="fab fa-instagram"></i></a>
     </li>
     <li class="border_round tran3s">
-      <a href="#"><i class="fab fa-tiktok"></i></a>
+      <a href="https://www.tiktok.com/@punjabgrocershalalmeat"><i class="fab fa-tiktok"></i></a>
     </li>
   </ul>
 </div>
@@ -388,368 +125,25 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
 
       <!-- Banner ____________________________________ -->
       <div id="banner">
-        <div class="rev_slider_wrapper">
-          <!-- START REVOLUTION SLIDER 5.0 auto mode -->
-          <div id="main_slider" class="rev_slider" data-version="5.0">
-            <ul>
-              <!-- SLIDE1  -->
-              <li
-                data-index="rs-377"
-                data-transition="curtain-1"
-                data-slotamount="1"
-                data-easein="default"
-                data-easeout="default"
-                data-masterspeed="default"
-                data-thumb="images/home/slide-1.jpg"
-                data-rotate="0"
-                data-saveperformance="off"
-                data-title="Business Solutions"
-                data-description=""
-              >
-                <!-- MAIN IMAGE -->
-                <img
-                  src="images/home/slide-1.jpg"
-                  alt="image"
-                  data-bgposition="center center"
-                  data-bgfit="cover"
-                  data-bgrepeat="no-repeat"
-                  class="rev-slidebg img-responsive"
-                  style="width: 100%; height: auto;"
-                />
-                <!-- LAYERS -->
-
-                <!-- LAYER NR. 1 -->
-                <!-- <div
-                  class="tp-caption tp-resizeme rs-parallaxlevel-3"
-                  data-x="['center','center','center','center']"
-                  data-hoffset="['0','0','35','0']"
-                  data-y="['middle','middle','middle','middle']"
-                  data-voffset="['-120','-120','-120','-120']"
-                  data-width="none"
-                  data-height="none"
-                  data-transform_idle="o:1;"
-                  data-transform_in="z:0;rX:0deg;rY:0;rZ:0;sX:1.5;sY:1.5;skX:0;skY:0;opacity:0;s:1500;e:Power3.easeInOut;"
-                  data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;"
-                  data-mask_in="x:0px;y:0px;s:inherit;e:inherit;"
-                  data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;"
-                  data-start="1000"
-                  data-splitout="none"
-                  data-responsive_offset="on"
-                  data-elementdelay="0.05"
-                  style="z-index: 5"
-                > -->
-                  <!--<img src="images/home/1.png" alt="" />-->
-                <!-- </div> -->
-
-                <!-- LAYER NR. 2 -->
-                <div
-                  class="tp-caption tp-resizeme rs-parallaxlevel-3"
-                  data-x="['center','center','center','center']"
-                  data-hoffset="['0','0','35','0']"
-                  data-y="['middle','middle','middle','middle']"
-                  data-voffset="['50','50','50','50']"
-                  data-width="none"
-                  data-height="none"
-                  data-transform_idle="o:1;"
-                  data-transform_in="z:0;rX:0deg;rY:0;rZ:0;sX:1.5;sY:1.5;skX:0;skY:0;opacity:0;s:1500;e:Power3.easeInOut;"
-                  data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;"
-                  data-mask_in="x:0px;y:0px;s:inherit;e:inherit;"
-                  data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;"
-                  data-start="1500"
-                  data-splitout="none"
-                  data-responsive_offset="on"
-                  data-elementdelay="0.05"
-                  style="z-index: 5"
-                >
-                  <!--<h1>Organic Store</h1>-->
-                </div>
-
-                <!-- LAYER NR. 3 -->
-                <div
-                  class="tp-caption tp-resizeme rs-parallaxlevel-2"
-                  data-x="['center','center','center','center']"
-                  data-hoffset="['0','0','35','0']"
-                  data-y="['middle','middle','middle','middle']"
-                  data-voffset="['110','110','110','110']"
-                  data-width="none"
-                  data-height="none"
-                  data-whitespace="nowrap"
-                  data-transform_idle="o:1;"
-                  data-transform_in="y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;s:2000;e:Power4.easeInOut;"
-                  data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;"
-                  data-mask_in="x:0px;y:[100%];"
-                  data-mask_out="x:inherit;y:inherit;"
-                  data-start="2000"
-                  data-splitin="none"
-                  data-splitout="none"
-                  data-responsive_offset="on"
-                  style="z-index: 6; white-space: nowrap"
-                >
-                  <h5 class="cp-title">
-                    <!--Fruits ~ Vegetables ~ Foods ~ Cosmetics-->
-                  </h5>
-                </div>
-
-                <!-- LAYER NR. 4 -->
-                <div
-                  class="tp-caption tp-resizeme rs-parallaxlevel-2"
-                  data-x="['center','center','center','center']"
-                  data-hoffset="['0','0','35','0']"
-                  data-y="['middle','middle','middle','middle']"
-                  data-voffset="['160','160','160','160']"
-                  data-width="none"
-                  data-height="none"
-                  data-whitespace="nowrap"
-                  data-transform_idle="o:1;"
-                  data-transform_in="y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;s:2000;e:Power4.easeInOut;"
-                  data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;"
-                  data-mask_in="x:0px;y:[100%];"
-                  data-mask_out="x:inherit;y:inherit;"
-                  data-start="2500"
-                  data-splitin="none"
-                  data-splitout="none"
-                  data-responsive_offset="on"
-                  style="z-index: 6; white-space: nowrap"
-                >
-                  <h5 class="cp-title-2">
-                    <!--We are providing highest quality Organics Products for USA-->
-                    <!--almo-->
-                  </h5>
-                </div>
-              </li>
-
-              <!-- SLIDE2  -->
-              <li
-                data-index="rs-18"
-                data-transition="zoomin"
-                data-slotamount="7"
-                data-easein="Power4.easeInOut"
-                data-easeout="Power4.easeInOut"
-                data-masterspeed="2000"
-                data-thumb="images/home/slide-2.jpg"
-                data-rotate="0"
-                data-saveperformance="off"
-                data-title="Successful Careers"
-                data-description=""
-              >
-                <!-- MAIN IMAGE -->
-                <img
-                  src="images/home/slide-2.jpg"
-                  alt=""
-                  data-bgposition="top center"
-                  class="rev-slidebg"
-                  data-no-retina
-                />
-                <!-- LAYERS -->
-                <div
-                  class="tp-caption tp-resizeme"
-                  data-x="['center','center','center','center']"
-                  data-hoffset="['80','80','80','80']"
-                  data-y="['middle','middle','middle','middle']"
-                  data-voffset="['-160','-160','-160','-160']"
-                  data-width="none"
-                  data-height="none"
-                  data-transform_idle="o:1;"
-                  data-transform_in="z:0;rX:0deg;rY:0;rZ:0;sX:1.5;sY:1.5;skX:0;skY:0;opacity:0;s:1500;e:Power3.easeInOut;"
-                  data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;"
-                  data-mask_in="x:0px;y:0px;s:inherit;e:inherit;"
-                  data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;"
-                  data-start="1000"
-                  data-splitout="none"
-                  data-responsive_offset="on"
-                  data-elementdelay="0.05"
-                  style="z-index: 5"
-                >
-                  <img src="images/home/4.png" alt="" />
-                </div>
-                <div
-                  class="tp-caption tp-resizeme banner-caption-box"
-                  data-x="right"
-                  data-hoffset="0"
-                  data-y="top"
-                  data-voffset="260"
-                  data-transform_idle="o:1;"
-                  data-transform_in="x:[-175%];y:0px;z:0;rX:0;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0.01;s:3000;e:Power3.easeOut;"
-                  data-transform_out="s:1000;e:Power3.easeInOut;s:1000;e:Power3.easeInOut;"
-                  data-mask_in="x:[100%];y:0;s:inherit;e:inherit;"
-                  data-splitin="none"
-                  data-splitout="none"
-                  data-start="1000"
-                >
-                  <div class="banner-caption-h1">
-                    <!--Get Blackberry <br />Pack With 50% Off-->
-                  </div>
-                  <div class="banner-caption-p">
-                    <p>
-                      <!--Great explorer of the truth, the master-builder of human-->
-                      <!--happiness no sed one rejects <br />dislikes, or avoids-->
-                      <!--pleasure itself, because it is pleasure.-->
-                    </p>
-                  </div>
-                  <a href="#" class="thm-btn contuct-us">shop now</a>
-                </div>
-              </li>
-
-              <!-- SLIDE3  -->
-              <li
-                data-index="rs-20"
-                data-transition="zoomin"
-                data-slotamount="7"
-                data-easein="Power4.easeInOut"
-                data-easeout="Power4.easeInOut"
-                data-masterspeed="2000"
-                data-thumb="images/home/slide-3.jpg"
-                data-rotate="0"
-                data-saveperformance="off"
-                data-title="Your Success"
-                data-description=""
-              >
-                <!-- MAIN IMAGE -->
-                <img
-                  src="images/home/slide-3.jpg"
-                  alt=""
-                  data-bgposition="top center"
-                  class="rev-slidebg"
-                  data-no-retina
-                />
-                <!-- LAYERS -->
-
-                <!-- LAYER NR. 1 -->
-                <div
-                  class="tp-caption tp-resizeme"
-                  data-x="['center','center','center','center']"
-                  data-hoffset="['0','0','35','0']"
-                  data-y="['middle','middle','middle','middle']"
-                  data-voffset="['-120','-120','-120','-120']"
-                  data-width="none"
-                  data-height="none"
-                  data-transform_idle="o:1;"
-                  data-transform_in="z:0;rX:0deg;rY:0;rZ:0;sX:1.5;sY:1.5;skX:0;skY:0;opacity:0;s:1500;e:Power3.easeInOut;"
-                  data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;"
-                  data-mask_in="x:0px;y:0px;s:inherit;e:inherit;"
-                  data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;"
-                  data-start="1000"
-                  data-splitout="none"
-                  data-responsive_offset="on"
-                  data-elementdelay="0.05"
-                  style="z-index: 5"
-                >
-                  <img src="images/home/" alt="" />
-                </div>
-
-                <!-- LAYER NR. 1 -->
-                <div
-                  class="tp-caption tp-resizeme text-center"
-                  data-x="center"
-                  data-hoffset="0"
-                  data-y="center"
-                  data-voffset="-40"
-                  data-transform_idle="o:1;"
-                  data-transform_in="x:[-175%];y:0px;z:0;rX:0;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0.01;s:3000;e:Power3.easeOut;"
-                  data-transform_out="s:1000;e:Power3.easeInOut;s:1000;e:Power3.easeInOut;"
-                  data-mask_in="x:[100%];y:0;s:inherit;e:inherit;"
-                  data-splitin="none"
-                  data-splitout="none"
-                  data-start="500"
-                >
-                  <div class="banner-caption-h2"></div>
-                </div>
-                <div
-                  class="tp-caption tp-resizeme text-center"
-                  data-x="center"
-                  data-hoffset="0"
-                  data-y="top"
-                  data-voffset="360"
-                  data-transform_idle="o:1;"
-                  data-transform_in="x:[175%];y:0px;z:0;rX:0;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0.01;s:3000;e:Power3.easeOut;"
-                  data-transform_out="s:1000;e:Power3.easeInOut;s:1000;e:Power3.easeInOut;"
-                  data-mask_in="x:[-100%];y:0;s:inherit;e:inherit;"
-                  data-splitin="none"
-                  data-splitout="none"
-                  data-responsive_offset="on"
-                  data-start="1400"
-                >
-                  <!--<div class="banner-caption-h3">With Your Affortable</div>-->
-                  <!--<div class="banner-caption-p">-->
-                  <!--  <p>-->
-                  <!--    Great explorer of the truth, the master-builder of human-->
-                  <!--    happin-->
-                  <!--  </p>-->
-                  </div>
-                  <a href="#" class="color1-bg contuct-us">shop now</a>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <!-- END REVOLUTION SLIDER -->
+  <div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+      <!-- Slide 1 -->
+      <div class="swiper-slide">
+        <img src="images/home/slide-1.jpg" alt="Slide 1" style="margin: 72px 0;" />
       </div>
-      <!-- End of #banner -->
 
-      <!-- about Section ************************** -->
-      <!-- <div class="about_section">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12t">
-              <div
-                class="item wow fadeInLef"
-                style="background-image: url(images/about/1.jpg)"
-              >
-                <div class="offer-sec">
-                  <div class="inner-title">
-                    For All Cosmetics
-                    <div class="offer">
-                      <span>30% <br />OFF</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="content">
-                  <h3>We Grow Beauty</h3>
-                  <p>
-                    It is a long established fact that a reader will be <br />
-                    distracted by the readable content of a page when <br />
-                    looking organic cosmetics.
-                  </p>
-                  <div class="link-btn">
-                    <a href="#" class="tran3s"
-                      >More Products<span class="fa fa-sort-desc"></span
-                    ></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12t">
-              <div
-                class="item wow fadeInRight"
-                style="background-image: url(images/about/2.jpg)"
-              >
-                <div class="offer-sec">
-                  <div class="inner-title">
-                    For All Cosmetics
-                    <div class="offer">
-                      <span>30% <br />OFF</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="content">
-                  <h3>We Grow Beauty</h3>
-                  <p>
-                    It is a long established fact that a reader will be <br />
-                    distracted by the readable content of a page when <br />
-                    looking organic cosmetics.
-                  </p>
-                  <div class="link-btn">
-                    <a href="#" class="tran3s"
-                      >More Products<span class="fa fa-sort-desc"></span
-                    ></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> -->
-      <!-- End of .welcome_section -->
+      <!-- Slide 2 -->
+      <div class="swiper-slide">
+        <img src="images/home/slide-2.jpg" alt="Slide 2" style="margin: 72px 0;"  />
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="swiper-slide">
+        <img src="images/home/slide-3.jpg" alt="Slide 3" style="margin: 72px 0;"  />
+    </div>
+
+  </div>
+</div>
 
       <!--feature Section-->
       <section class="featured-product">
@@ -782,56 +176,51 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
 <div class="row filter-list clearfix" id="MixItUpContainer">
   <?php foreach ($products as $product): ?>
     <?php $categoryClass = strtolower(preg_replace('/\s+/', '', $product['category_name'])); ?>
-    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 mix mix_all default-item 
-    <?php echo $categoryClass; ?>">
-      <div class="inner-box">
-        <div class="single-item center">
-        <figure class="image-box">
-        <img src="admin/assets/uploads/products/<?php echo htmlspecialchars($product['image']); ?>" 
-     alt="<?php echo htmlspecialchars($product['name']); ?>" 
-     style="width:50%; height:50%;">
+    <div class="col-md-4 col-sm-6 col-xs-12 default-item mix <?php echo $categoryClass; ?>" style="display: inline-block;">
+  <div class="product-card inner-box">
+    <div class="single-item center">
+
+      <figure class="image-box">
+        <img class="product-image" 
+             src="admin/assets/uploads/products/<?php echo htmlspecialchars($product['image']); ?>" 
+             alt="<?php echo htmlspecialchars($product['name']); ?>">
         <div class="product-model hot"><?php echo ucfirst($product['category_name']); ?></div>
-        </figure>
-          <div class="content">
-            <h3><a href="#"><?php echo htmlspecialchars($product['name']); ?></a></h3>
-            <div class="rating">
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span>
+      </figure>
+
+      <div class="content">
+        <h3><a href="#"><?php echo htmlspecialchars($product['name']); ?></a></h3>
+        <div class="rating">
+          <span class="fa fa-star"></span><span class="fa fa-star"></span>
+          <span class="fa fa-star"></span><span class="fa fa-star"></span>
+          <span class="fa fa-star"></span>
+        </div>
+
+        <div class="price">
+          <?php if (!empty($product['discount_name']) && 
+                    $product['discount_status'] == 'active' &&
+                    strtotime($product['start_date']) <= time() && 
+                    strtotime($product['end_date']) >= time()): ?>
+            <?php
+              $original = (float)$product['price'];
+              $discountAmount = ($product['discount_type'] === 'percentage') 
+                  ? $original * ($product['discount_value'] / 100)
+                  : $product['discount_value'];
+              $discounted = max(0, $original - $discountAmount);
+            ?>
+            <small style="text-decoration: line-through; color: #999; padding-right: 1rem">
+              $<?php echo number_format($original, 2); ?>
+            </small>
+            <span style="color: #e60000; font-weight: bold;">
+              $<?php echo number_format($discounted, 2); ?>
+            </span>
+            <div class="discount-badge" style="color: green; font-size: 12px;">
+              <?php echo ($product['discount_type'] === 'percentage') 
+                  ? number_format($product['discount_value']) . '% OFF' 
+                  : 'Save $' . number_format($product['discount_value'], 2); ?>
             </div>
-            <div class="price">
-  <?php if (!empty($product['discount_name']) && 
-            $product['discount_status'] == 'active' &&
-            strtotime($product['start_date']) <= time() && 
-            strtotime($product['end_date']) >= time()): ?>
-      
-      <?php
-          $original = (float)$product['price'];
-          $discountAmount = ($product['discount_type'] === 'percentage') 
-              ? $original * ($product['discount_value'] / 100)
-              : $product['discount_value'];
-          $discounted = max(0, $original - $discountAmount);
-      ?>
-      
-      <small style="text-decoration: line-through; color: #999; padding-right: 1rem">
-        $<?php echo number_format($original, 2); ?>
-      </small>
-      
-      <span style="color: #e60000; font-weight: bold;">
-        $<?php echo number_format($discounted, 2); ?>
-      </span>
-      
-      <div class="discount-badge" style="color:green; font-size: 12px;">
-          <?php echo ($product['discount_type'] === 'percentage') 
-              ? number_format($product['discount_value']) . '% OFF' 
-              : 'Save $' . number_format($product['discount_value'], 2); ?>
-      </div>
-  
-  <?php else: ?>
-      <span style="font-weight: bold;">$<?php echo number_format($product['price'], 2); ?></span>
-  <?php endif; ?>
+          <?php else: ?>
+            <span style="font-weight: bold;">$<?php echo number_format($product['price'], 2); ?></span>
+          <?php endif; ?>
 </div>
 
 
@@ -842,7 +231,7 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
                 <ul>
                   <li class="tultip-op">
                     <span class="tultip"><i class="fa fa-sort-desc"></i>VIEW DETAILS</span>
-                    <a href="/organicstore/shop-single.php?id=<?php echo $product['id']; ?>">
+                    <a href="/shop-single.php?id=<?php echo $product['id']; ?>">
                     <span class="icon-icon-32846"></span>                  
                   </li>
                 </ul>
@@ -858,11 +247,6 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
     </div>
   <?php endforeach; ?>
 </div>
-
-
-
-
-
         </div>
         <span class="all_products">
           <h5><a href="./shop.php" class="view_all_products">View All</a></h5>
@@ -870,246 +254,7 @@ $products = $pdo->query($productsQuery)->fetchAll(PDO::FETCH_ASSOC);
       </section>
       <!-- End of section -->
 
-      <!--gallery Section-->
-      <!-- <section class="gallery">
-        <div class="container">
-          <div class="theme_title center">
-            <h3>Halal Meat</h3>
-          </div>
-
-          <div class="row filter-list clearfix">
-            <div
-              class="col-md-4 col-sm-6 col-xs-12 mix mix_all default-item all beauty others"
-              style="display: inline-block"
-            >
-              <div class="inner-box">
-                <div class="single-item center">
-                  <figure class="image-box">
-                    <img src="images/gallery/1.jpg" alt="" />
-                  </figure>
-                  <div class="overlay-box">
-                    <div class="inner">
-                      <div class="image-view">
-                        <div class="icon-holder">
-                          <a
-                            href="images/gallery/1.jpg"
-                            class="fancybox"
-                            data-fancybox-group="home-gallery"
-                            title="Meat"
-                            ><span class="icon-magnifier"></span
-                          ></a>
-                        </div>
-                      </div>
-                      <div class="bottom-content">
-                        <h4><a href="#">Coffee Break Cake</a></h4>
-                        <div class="price">
-                          $12.99 <span class="prev-rate">$14.99</span>
-                        </div>
-                        <div class="icon-box">
-                          <a href="shop-single.php"
-                            ><span class="icon-icon-32846"></span
-                          ></a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="col-md-4 col-sm-6 col-xs-12 mix mix_all default-item all others"
-              style="display: inline-block"
-            >
-              <div class="inner-box">
-                <div class="single-item center">
-                  <figure class="image-box">
-                    <img src="images/gallery/2.jpg" alt="" />
-                  </figure>
-                  <div class="overlay-box">
-                    <div class="inner">
-                      <div class="image-view">
-                        <div class="icon-holder">
-                          <a
-                            href="images/gallery/1.jpg"
-                            class="fancybox"
-                            data-fancybox-group="home-gallery"
-                            title="Meat"
-                            ><span class="icon-magnifier"></span
-                          ></a>
-                        </div>
-                      </div>
-                      <div class="bottom-content">
-                        <h4><a href="#">Coffee Break Cake</a></h4>
-                        <div class="price">
-                          $12.99 <span class="prev-rate">$14.99</span>
-                        </div>
-                        <div class="icon-box">
-                          <a href="shop-single.php"
-                            ><span class="icon-icon-32846"></span
-                          ></a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="col-md-4 col-sm-6 col-xs-12 mix mix_all default-item all fruits vegetables beauty"
-              style="display: inline-block"
-            >
-              <div class="inner-box">
-                <div class="single-item center">
-                  <figure class="image-box">
-                    <img src="images/gallery/3.jpg" alt="" />
-                  </figure>
-                  <div class="overlay-box">
-                    <div class="inner">
-                      <div class="image-view">
-                        <div class="icon-holder">
-                          <a
-                            href="images/gallery/1.jpg"
-                            class="fancybox"
-                            data-fancybox-group="home-gallery"
-                            title="Meat"
-                            ><span class="icon-magnifier"></span
-                          ></a>
-                        </div>
-                      </div>
-                      <div class="bottom-content">
-                        <h4><a href="#">Coffee Break Cake</a></h4>
-                        <div class="price">
-                          $12.99 <span class="prev-rate">$14.99</span>
-                        </div>
-                        <div class="icon-box">
-                          <a href="shop-single.php"
-                            ><span class="icon-icon-32846"></span
-                          ></a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="col-md-4 col-sm-6 col-xs-12 mix mix_all default-item all beauty others"
-              style="display: inline-block"
-            >
-              <div class="inner-box">
-                <div class="single-item center">
-                  <figure class="image-box">
-                    <img src="images/gallery/4.jpg" alt="" />
-                  </figure>
-                  <div class="overlay-box">
-                    <div class="inner">
-                      <div class="image-view">
-                        <div class="icon-holder">
-                          <a href="images/gallery/1.jpg" class="fancybox"
-                            ><span class="icon-magnifier"></span
-                          ></a>
-                        </div>
-                      </div>
-                      <div class="bottom-content">
-                        <h4><a href="#">Coffee Break Cake</a></h4>
-                        <div class="price">
-                          $12.99 <span class="prev-rate">$14.99</span>
-                        </div>
-                        <div class="icon-box">
-                          <a href="shop-single.php"
-                            ><span class="icon-icon-32846"></span
-                          ></a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="col-md-4 col-sm-6 col-xs-12 mix mix_all default-item all fruits others"
-              style="display: inline-block"
-            >
-              <div class="inner-box">
-                <div class="single-item center">
-                  <figure class="image-box">
-                    <img src="images/gallery/5.jpg" alt="" />
-                  </figure>
-                  <div class="overlay-box">
-                    <div class="inner">
-                      <div class="image-view">
-                        <div class="icon-holder">
-                          <a href="images/gallery/1.jpg" class="fancybox"
-                            ><span class="icon-magnifier"></span
-                          ></a>
-                        </div>
-                      </div>
-                      <div class="bottom-content">
-                        <h4><a href="#">Coffee Break Cake</a></h4>
-                        <div class="price">
-                          $12.99 <span class="prev-rate">$14.99</span>
-                        </div>
-                        <div class="icon-box">
-                          <a href="shop-single.php"
-                            ><span class="icon-icon-32846"></span
-                          ></a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="col-md-4 col-sm-6 col-xs-12 mix mix_all default-item all fruits vegetables beauty others"
-              style="display: inline-block"
-            >
-              <div class="inner-box">
-                <div class="single-item center">
-                  <figure class="image-box">
-                    <img src="images/gallery/6.jpg" alt="" />
-                  </figure>
-                  <div class="overlay-box">
-                    <div class="inner">
-                      <div class="image-view">
-                        <div class="icon-holder">
-                          <a href="images/gallery/1.jpg" class="fancybox"
-                            ><span class="icon-magnifier"></span
-                          ></a>
-                        </div>
-                      </div>
-                      <div class="bottom-content">
-                        <h4><a href="#">Coffee Break Cake</a></h4>
-                        <div class="price">
-                          $12.99 <span class="prev-rate">$14.99</span>
-                        </div>
-                        <div class="icon-box">
-                          <a href="shop-single.php"
-                            ><span class="icon-icon-32846"></span
-                          ></a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <span class="all_products">
-          <h5>
-            <a href="./shop.php" class="view_all_products">See Details</a>
-          </h5>
-        </span>
-      </section> -->
-      <!-- End of section -->
-
-      <!-- Request Quote ******************************* -->
+      <!-- Request Quote -->
       <section class="why_choose_us">
         <div
           class="theme_title_bg"
@@ -1216,300 +361,6 @@ Fresh produce, pantry staples, dairy, snacks & beverages — all under one roof.
         <!-- End of .container -->
       </section>
       <!-- End of why chooreus -->
-
-      <!--Our Latest News-->
-      <!-- <section class="news">
-        <div class="container">
-          <div class="theme_title center">
-            <h3>our latest news</h3>
-          </div>
-          <div class="row">
-            <div class="col-md-4 col-sm-6 col-xs-12">
-              <div
-                class="blogList_single_post clear_fix wow fadeInUp"
-                style="visibility: visible; animation-name: fadeInUp"
-              >
-                <div class="img_holder">
-                  <img
-                    src="images/blog/1.jpg"
-                    alt="News"
-                    class="img-responsive"
-                  />
-                  <div class="opacity tran3s">
-                    <div class="icon">
-                      <span
-                        ><a href="blog-details.html" class="border_round"
-                          >+</a
-                        ></span
-                      >
-                    </div>
-                  </div>
-                </div>
-                <div class="post">
-                  <ul>
-                    <li>
-                      <a href="blog-details.html" class="tran3s"
-                        ><i class="fa fa-tag" aria-hidden="true"></i> Healthy</a
-                      >
-                    </li>
-                    <li>
-                      <a href="blog-details.html" class="tran3s"
-                        ><i class="fa fa-clock-o" aria-hidden="true"></i> J21st
-                        Aug, 2015</a
-                      >
-                    </li>
-                    <li>
-                      <a href="blog-details.html" class="tran3s"
-                        ><i class="fa fa-comments" aria-hidden="true"></i> 26</a
-                      >
-                    </li>
-                  </ul>
-                  <div class="text">
-                    <h4>
-                      <a href="blog-details.html"
-                        >You should add 5 things in your daily meals.</a
-                      >
-                    </h4>
-                    <p>
-                      As more and more people are turning to organic lifestyles
-                      & trying improve their health...
-                    </p>
-                    <div class="link">
-                      <a href="#" class="tran3s"
-                        >READ MORE<span class="fa fa-sort-desc"></span
-                      ></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4 col-sm-6 col-xs-12">
-              <div
-                class="blogList_single_post clear_fix wow fadeInUp"
-                style="visibility: visible; animation-name: fadeInUp"
-              >
-                <div class="img_holder">
-                  <img
-                    src="images/blog/2.jpg"
-                    alt="News"
-                    class="img-responsive"
-                  />
-                  <div class="opacity tran3s">
-                    <div class="icon">
-                      <span
-                        ><a href="blog-details.html" class="border_round"
-                          >+</a
-                        ></span
-                      >
-                    </div>
-                  </div>
-                </div>
-                <div class="post">
-                  <ul>
-                    <li>
-                      <a href="blog-details.html" class="tran3s"
-                        ><i class="fa fa-tag" aria-hidden="true"></i> Healthy</a
-                      >
-                    </li>
-                    <li>
-                      <a href="blog-details.html" class="tran3s"
-                        ><i class="fa fa-clock-o" aria-hidden="true"></i> J21st
-                        Aug, 2015</a
-                      >
-                    </li>
-                    <li>
-                      <a href="blog-details.html" class="tran3s"
-                        ><i class="fa fa-comments" aria-hidden="true"></i> 26</a
-                      >
-                    </li>
-                  </ul>
-                  <div class="text">
-                    <h4>
-                      <a href="blog-details.html"
-                        >You should add 5 things in your daily meals.</a
-                      >
-                    </h4>
-                    <p>
-                      As more and more people are turning to organic lifestyles
-                      & trying improve their health...
-                    </p>
-                    <div class="link">
-                      <a href="#" class="tran3s"
-                        >READ MORE<span class="fa fa-sort-desc"></span
-                      ></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4 col-sm-6 col-xs-12">
-              <div
-                class="blogList_single_post clear_fix wow fadeInUp"
-                style="visibility: visible; animation-name: fadeInUp"
-              >
-                <div class="img_holder">
-                  <img
-                    src="images/blog/3.jpg"
-                    alt="News"
-                    class="img-responsive"
-                  />
-                  <div class="opacity tran3s">
-                    <div class="icon">
-                      <span
-                        ><a href="blog-details.html" class="border_round"
-                          >+</a
-                        ></span
-                      >
-                    </div>
-                  </div>
-                </div>
-                <div class="post">
-                  <ul>
-                    <li>
-                      <a href="blog-details.html" class="tran3s"
-                        ><i class="fa fa-tag" aria-hidden="true"></i> Healthy</a
-                      >
-                    </li>
-                    <li>
-                      <a href="blog-details.html" class="tran3s"
-                        ><i class="fa fa-clock-o" aria-hidden="true"></i> J21st
-                        Aug, 2015</a
-                      >
-                    </li>
-                    <li>
-                      <a href="blog-details.html" class="tran3s"
-                        ><i class="fa fa-comments" aria-hidden="true"></i> 26</a
-                      >
-                    </li>
-                  </ul>
-                  <div class="text">
-                    <h4>
-                      <a href="blog-details.html"
-                        >You should add 5 things in your daily meals.</a
-                      >
-                    </h4>
-                    <p>
-                      As more and more people are turning to organic lifestyles
-                      & trying improve their health...
-                    </p>
-                    <div class="link">
-                      <a href="#" class="tran3s"
-                        >READ MORE<span class="fa fa-sort-desc"></span
-                      ></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> -->
-
-      <!-- Our Service ****************************** -->
-      <!-- <div class="our_farmer">
-        <div class="container">
-          <div class="theme_title center">
-            <h2>our farmers</h2>
-          </div>
-
-          <div class="row">
-            <div class="service_slider owl-carousel owl-theme">
-              <div class="item center">
-                <div class="img_holder">
-                  <img src="images/team/1.jpg" alt="images" />
-                  <div class="overlay tran3s">
-                    <div class="inner-box">
-                      <ul>
-                        <li>
-                          <a href="#"><span class="fa fa-facebook"></span></a>
-                        </li>
-                        <li>
-                          <a href="#"><span class="fa fa-twitter"></span></a>
-                        </li>
-                        <li>
-                          <a href="#"
-                            ><span class="fa fa-google-plus"></span
-                          ></a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="text">
-                  <h4>Rebecca Garzany</h4>
-                  <a href="turnaround.html"><h5>Pastoral Farmer</h5></a>
-                  <p>
-                    Praising pain was born and I will give you a <br />complete
-                    account of the system.
-                  </p>
-                </div>
-              </div>
-
-              <div class="item center">
-                <div class="img_holder">
-                  <img src="images/team/2.jpg" alt="images" />
-                  <div class="overlay tran3s">
-                    <div class="inner-box">
-                      <ul>
-                        <li>
-                          <a href="#"><span class="fa fa-facebook"></span></a>
-                        </li>
-                        <li>
-                          <a href="#"><span class="fa fa-twitter"></span></a>
-                        </li>
-                        <li>
-                          <a href="#"
-                            ><span class="fa fa-google-plus"></span
-                          ></a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="text">
-                  <h4>George William</h4>
-                  <a href="turnaround.html"><h5>Arable Farmer</h5></a>
-                  <p>
-                    Praising pain was born and I will give you a <br />complete
-                    account of the system.
-                  </p>
-                </div>
-              </div>
-
-              <div class="item center">
-                <div class="img_holder">
-                  <img src="images/team/3.jpg" alt="images" />
-                  <div class="overlay tran3s">
-                    <div class="inner-box">
-                      <ul>
-                        <li>
-                          <a href="#"><span class="fa fa-facebook"></span></a>
-                        </li>
-                        <li>
-                          <a href="#"><span class="fa fa-twitter"></span></a>
-                        </li>
-                        <li>
-                          <a href="#"
-                            ><span class="fa fa-google-plus"></span
-                          ></a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="text">
-                  <h4>Giana Fernando</h4>
-                  <a href="turnaround.html"><h5>Farm Manager</h5></a>
-                  <p>
-                    Praising pain was born and I will give you a <br />complete
-                    account of the system.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> -->
 
       <!--Testimonials Section-->
       <section
@@ -1719,9 +570,9 @@ Fresh produce, pantry staples, dairy, snacks & beverages — all under one roof.
         <div class="col-lg-3 col-md-6 mb-4 footer_contact">
           <h5 class="fw-semibold">Get In Touch</h5>
           <ul class="list-unstyled small">
-            <li><a href="mailto:punjabgrocerhalalmeat@gmail.com" class="text-muted"><i class="fa fa-envelope me-2"></i>punjabgrocerhalalmeat@gmail.com</a></li>
-            <li><a href="tel:+19054517666" class="text-muted"><i class="fa fa-phone me-2"></i>(905) 451‑7666</a></li>
-            <li><a href="#" class="text-muted"><i class="fa fa-home me-2"></i>5 Montpelier St, Unit 106, 107, Brampton, ON L6Y 6H4</a></li>
+            <li><a href="mailto:punjabgrocerhalalmeat@gmail.com" class="text-muted"><i class="fa fa-envelope" style="margin-right:10px;"></i>punjabgrocerhalalmeat@gmail.com</a></li>
+            <li><a href="tel:+19054517666" class="text-muted"><i class="fa fa-phone me-2"style="margin-right:10px;"></i>(905) 451‑7666</a></li>
+            <li><a href="#" class="text-muted"><i class="fa fa-home me-2"style="margin-right:10px;"></i>5 Montpelier St, Unit 106, 107, Brampton, ON L6Y 6H4</a></li>
           </ul>
         </div>
 
@@ -1829,6 +680,12 @@ Fresh produce, pantry staples, dairy, snacks & beverages — all under one roof.
       <script src="js/popup.js"></script>
       <!--Newsletter.js-->
       <script src="js/newsletter.js"></script>
+      <!-- Swiper CSS -->
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+      />
+
       
    <!-- MixItUp JS -->
    <script>
@@ -1863,6 +720,29 @@ $(document).ready(function() {
     });
 });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+  const swiper = new Swiper(".mySwiper", {
+    loop: true,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false,
+    },
+    effect: "fade",
+    fadeEffect: {
+      crossFade: true,
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+  });
+</script>
+
 
 
 

@@ -71,16 +71,10 @@ CREATE TABLE settings (
 INSERT INTO admin_users (email, password, name) VALUES 
 ('admin@ecommerce.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Administrator');
 
--- Insert Sample Data
-INSERT INTO categories (name, description) VALUES 
-('Electronics', 'Electronic devices and gadgets'),
-('Clothing', 'Fashion and apparel'),
-('Books', 'Books and educational materials');
 
-INSERT INTO products (name, description, price, category_id, image) VALUES 
-('Smartphone', 'Latest smartphone with advanced features', 599.99, 1, 'smartphone.jpg'),
-('Laptop', 'High-performance laptop for professionals', 1299.99, 1, 'laptop.jpg'),
-('T-Shirt', 'Comfortable cotton t-shirt', 29.99, 2, 'tshirt.jpg');
+
+
+
 
 INSERT INTO users (name, email, phone, address) VALUES 
 ('John Doe', 'john@example.com', '+1234567890', '123 Main St, City, State'),
